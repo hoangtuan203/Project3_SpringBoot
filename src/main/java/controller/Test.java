@@ -10,8 +10,8 @@ public class Test {
     public String index(){
         return "index";
     }
-    @GetMapping("/login")
-    public String login() {
-        return "login/index";
-    }
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login/index";
+//    }
 }
