@@ -8,6 +8,6 @@ public class test {
     @RequestMapping("/login")
     public String login(Model model) {
         
-        return "index";
+        return "test";
     }
 }
