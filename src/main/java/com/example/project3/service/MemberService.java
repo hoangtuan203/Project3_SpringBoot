@@ -6,4 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface MemberService {
     List<Member> getAllMember();
+    Member getPasswordByMaTV(int maTV);
+    
+
 }

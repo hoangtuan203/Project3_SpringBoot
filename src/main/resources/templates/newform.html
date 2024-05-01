@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Form</title>
+</head>
+<body>
+    <h2>New Form</h2>
+    <form action="/submit-form" method="post">
+        <br>
+        <label for="email">Nhập mã thành viên:</label>
+        <input type="text" id="matv" name="matv" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <span th:if="${message}" th:text="${message}"></span>
+</body>
+</html>
