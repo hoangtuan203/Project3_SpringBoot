@@ -25,9 +25,14 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String listMember(Model model) {
+    public String login(Model model) {
         model.addAttribute("members", memberService.getAllMember());
-        return "test";
+        return "login";
+    }
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("members", memberService.getAllMember());
+        return "register";
     }
 
     @GetMapping("/newform")
