@@ -1,23 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
 
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Dropdown link
-        </a>
-      
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex justify-content-between p-4 align-items-center">
+        <div class="">
+          <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
+            MHPL
+          </a>
+        </div>
+        <input
+          id="search"
+          class="w-50 form-control"
+          type="search"
+          placeholder="Tìm kiếm thiết bị"
+          aria-label="Search"
+          onkeyup="SearchByName()"
+        />
+        <div class="dropdown">
+          <a
+            class="dropdown-toggle d-flex align-items-center text-dark"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
+              class="rounded-circle"
+              height="22"
+              alt="Black and White Portrait of a Man"
+              loading="lazy"
+            />
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Trang cá nhân</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+          </ul>
+        </div>
       </div>
-    <a href="/newform">ádasd</a>
-</body>
+
+      <div class="content-area">
+        <div class="row p-0">
+          <span class="fs-4">Danh sách thiết bị</span>
+        </div>
+        <div class="row mt-4 p-2">
+          <table id="load_data" class="table table-striped">
+            <thead class="bg-light fw-fw-normal">
+              <tr>
+                <th class="fw-medium">STT</th>
+                <th class="fw-medium">Mã Nhập Thiết Bị</th>
+                <th class="fw-medium">Tên Thiết Bị</th>
+                <th class="fw-medium">Mô Tả Thiết Bị</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      load_data();
+    });
+    function create_table(data) {
+      var tableBody = document.querySelector("#load_data tbody");
+      tableBody.innerHTML = "";
+      data.forEach(function (item, index) {
+        var row = `<tr>
+                      <td>${index + 1}</td>
+                      <td>${item.maTB}</td>
+                      <td>${item.tenTB}</td>
+                      <td>${item.mota}</td>
+                      <td>
+                        <button class="btn btn-success">đặt chỗ</button>  
+                      </td>
+                    </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+    function load_data() {
+      fetch("http://localhost:8080/thietbis")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          create_table(data);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+    function SearchByName() {
+      const searchInput = document.getElementById("search").value;
+      fetch(`http://localhost:8080/searchByName?name=${searchInput}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res){
+        console.log(res)
+      })
+      .catch(function(err){
+        console.log(err)
+    })
+    }
+  </script>
 </html>
