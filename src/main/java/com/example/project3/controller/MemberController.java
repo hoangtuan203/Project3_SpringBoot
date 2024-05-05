@@ -23,7 +23,14 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
-
+    @GetMapping("index")
+    public String index() {
+        return "index";
+    }
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+    
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("members", memberService.getAllMember());
@@ -31,7 +38,7 @@ public class MemberController {
     }
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("members", memberService.getAllMember());
+        model.addAttribute("members", new Member());
         return "register";
     }
 
@@ -73,5 +80,7 @@ public class MemberController {
         // Kiểm tra xem số điện thoại có 10 số không
         return ma != null && ma.matches("^\\d{10}$");
     }
+    // xu ly dang ky tai khoan
+
 
 }
