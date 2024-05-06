@@ -8,6 +8,5 @@ public interface MemberService {
     List<Member> getAllMember();
     Member getPasswordByMaTV(int maTV);
     Member loginMember(String email, String password);
-    Member loginMember(String email,String password);
 
 }
