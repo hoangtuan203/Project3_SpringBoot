@@ -22,10 +22,25 @@ public class Member {
     private String nganh;
     @Column(name="SDT")
     private String sdt;
-    @Column(name="Password")
-    private String password;
+
     @Column(name="Email")
     private String email;
+    public Member(){
+
+    }
+    public Member(int maTV, String tenTV, String khoa, String nganh, String sdt, String email, String password) {
+        this.maTV = maTV;
+        this.tenTV = tenTV;
+        this.khoa = khoa;
+        this.nganh = nganh;
+        this.sdt = sdt;
+        this.email = email;
+        this.password = password;
+    }
+
+    @Column(name="Password")
+    private String password;
+
 
     public int getMaTV() {
         return maTV;
