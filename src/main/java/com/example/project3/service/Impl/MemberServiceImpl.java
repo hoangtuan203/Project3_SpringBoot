@@ -23,6 +23,14 @@ public class MemberServiceImpl implements MemberService {
     public Member getPasswordByMaTV(int maTV) {
         return memberRepository.findById(maTV);
     }
-
+    @Override
+    public Member loginMember(String email, String password) {
+        Member member = memberRepository.findByEmail(email);
+        // Kiểm tra xem người dùng có tồn tại và mật khẩu có đúng không
+        if (member != null && member.getPassword().equals(password)) {
+            return member; // Trả về người dùng nếu đăng nhập thành công
+        }
+        return null; // Trả về null nếu đăng nhập thất bại
+    }
    
 }

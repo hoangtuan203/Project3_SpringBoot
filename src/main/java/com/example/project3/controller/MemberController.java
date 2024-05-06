@@ -33,14 +33,9 @@ public class MemberController {
     
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("members", memberService.getAllMember());
         return "login";
     }
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("members", new Member());
-        return "register";
-    }
+
 
     @GetMapping("/newform")
     public String showForm() {
@@ -80,7 +75,19 @@ public class MemberController {
         // Kiểm tra xem số điện thoại có 10 số không
         return ma != null && ma.matches("^\\d{10}$");
     }
-    // xu ly dang ky tai khoan
 
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
+        Member member = memberService.loginMember(email, password);
+        System.out.println("data:"+member);
+        if (member != null) {
+            model.addAttribute("member",member);
+            // Đăng nhập thành công
+            return "redirect:/loginSuccessful";
+
+        } else {
+            return "redirect:/login?error";
+        }
+    }
 
 }
