@@ -33,9 +33,14 @@ public class MemberController {
     
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("members", memberService.getAllMember());
         return "login";
+    }   
+    @GetMapping("/loginSuccessful")
+    public String loginSuccessful(Model model) {
+        
+        return "loginSuccessful";
     }
+
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("members", new Member());
@@ -81,6 +86,20 @@ public class MemberController {
         return ma != null && ma.matches("^\\d{10}$");
     }
     // xu ly dang ky tai khoan
+    
 
+    @PostMapping("/login")
+    public String loginMember(@RequestParam String email, @RequestParam String password, Model model) {
+        Member member = memberService.loginMember(email, password);
+        if (member != null) {
+            System.out.println(member);
+            model.addAttribute("member",member);
+            // Đăng nhập thành công
+            return "redirect:/loginSuccessful"; // Chuyển hướng đến trang chính của ứng dụng
+        } else {
+            
+            return "redirect:/login?error"; // Chuyển hướng đến trang đăng nhập và hiển thị thông báo lỗi
+        }
+    }
 
 }

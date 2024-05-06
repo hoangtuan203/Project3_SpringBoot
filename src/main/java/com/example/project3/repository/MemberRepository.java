@@ -7,4 +7,5 @@ import com.example.project3.models.Member;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     Member findById(int id);
+    Member findByEmail(String email);
 }
