@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.project3.models.Member;
 import com.example.project3.service.EmailService;
@@ -88,17 +89,6 @@ public class MemberController {
     // xu ly dang ky tai khoan
     
 
-    @PostMapping("/login")
-    public String loginMember(@RequestParam int maTV, @RequestParam String password, Model model) {
-        Member member = memberService.loginMember(maTV, password);
-        if (member != null) {
-            System.out.println(member);
-            model.addAttribute("member", member); // member là đối tượng thành viên đã đăng nhập thành công
-
-            return "index"; 
-        } else {
-            
-            return "redirect:/login?error"; // Chuyển hướng đến trang đăng nhập và hiển thị thông báo lỗi
-        }
-    }
+    
+    
 }
