@@ -12,6 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer>,CrudRep
     Member findById(int id);
     List<Member> findByMaTV(int maTV);
     Member findByEmail(String email);
-    
 
+
+    boolean existsByMaTV(int maTV);
 }

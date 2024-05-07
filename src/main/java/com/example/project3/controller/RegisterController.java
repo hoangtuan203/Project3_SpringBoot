@@ -36,38 +36,33 @@ public class RegisterController {
         model.addAttribute("member", new Member());
         return "register";
     }
-    @PostMapping("/register/save")
-    public String register(@Validated @ModelAttribute("member") Member member, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (!isValidEmail(member.getEmail())) {
-            result.rejectValue("email", null, "Invalid email format");
+    @PostMapping("/register")
+    public String register(@RequestParam int maTV, @RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword, Model model) {
+        if (isValidEmail(email) && isValidPassword(password) && password.equals(confirmPassword)) {
+            if (registerService.existsByMaTV(maTV)) {
+                Member existingMember = registerService.findMemberByMaTV(maTV);
+                existingMember.setEmail(email);
+                existingMember.setPassword(password);
+                registerService.saveMember(existingMember);
+                model.addAttribute("member", existingMember);
+                return "login"; 
+            } else {
+                Member newMember = new Member();
+                newMember.setMaTV(maTV);
+                newMember.setEmail(email);
+                newMember.setPassword(password);
+                registerService.saveMember(newMember);
+                model.addAttribute("member", newMember);
+                return "login"; 
+            }
+        } else {
+            model.addAttribute("error", "Email hoặc mật khẩu không hợp lệ hoặc mật khẩu không khớp.");
+            return "register"; 
         }
-        if (!isValidPassword(member.getPassword())) {
-            result.rejectValue("password", null, "Password must meet the criteria");
-        }
-
-        Member existingMember = registerService.findMemberByEmail(member.getEmail());
-        if (existingMember != null) {
-            result.rejectValue("email", null, "Email already exists");
-        }
-
-        if (result.hasErrors()) {
-            model.addAttribute("member", member);
-            return "register";
-        }
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encodedPassword);
-
-        // Lưu thành viên vào cơ sở dữ liệu
-        registerService.saveMember(member);
-
-        // Thêm thông báo thành công vào đối tượng RedirectAttributes
-        redirectAttributes.addFlashAttribute("successMessage", "Registration successful!");
-
-        // Chuyển hướng sau khi đăng ký thành công
-        return "redirect:/register";
     }
+
+
+
     //regex
 
     public static boolean isValidEmail(String email) {

@@ -23,9 +23,9 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
-    @GetMapping("index")
+    @GetMapping("/")
     public String index() {
-        return "index";
+        return "login";
     }
     public String getMethodName(@RequestParam String param) {
         return new String();
@@ -41,11 +41,11 @@ public class MemberController {
         return "loginSuccessful";
     }
 
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("members", new Member());
-        return "register";
-    }
+//    @GetMapping("/register")
+//    public String register(Model model) {
+//        model.addAttribute("members", new Member());
+//        return "register";
+//    }
 
     @GetMapping("/newform")
     public String showForm() {
@@ -93,13 +93,12 @@ public class MemberController {
         Member member = memberService.loginMember(email, password);
         if (member != null) {
             System.out.println(member);
-            model.addAttribute("member",member);
-            // Đăng nhập thành công
-            return "redirect:/loginSuccessful"; // Chuyển hướng đến trang chính của ứng dụng
+            model.addAttribute("member", member); // member là đối tượng thành viên đã đăng nhập thành công
+
+            return "index"; 
         } else {
             
             return "redirect:/login?error"; // Chuyển hướng đến trang đăng nhập và hiển thị thông báo lỗi
         }
     }
-
 }

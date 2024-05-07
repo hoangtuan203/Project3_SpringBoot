@@ -12,7 +12,9 @@ import com.example.project3.service.RegisterService;
 @Service
 class RegisterServiceImpl implements RegisterService {
     private MemberRepository memberRepository;
-
+    public RegisterServiceImpl( MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
     @Override
     public void saveMember(Member member) {
         Member m = new Member();
@@ -32,6 +34,16 @@ class RegisterServiceImpl implements RegisterService {
         List<Member> members = memberRepository.findAll();
         return members.stream().map((member) -> convertEntityToDto(member))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Member findMemberByMaTV(int maTV) {
+        return null;
+    }
+
+    @Override
+    public boolean existsByMaTV(int maTV) {
+        return false;
     }
 
     private Member convertEntityToDto(Member member) {

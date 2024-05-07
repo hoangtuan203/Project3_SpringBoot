@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Topic Listing Bootstrap 5 Template</title>
+        <title>Quản Lý Đặt Chỗ</title>
 
         <!-- CSS FILES -->        
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,9 +70,9 @@
                             <li><a class="dropdown-item" href="#">Trạng thái vi phạm</a></li>
                             <li><a class="dropdown-item" href="#">Đặt chỗ thiết bị</a></li>
                             <li><a class="dropdown-item" href="#">Thiết bị đang mượn</a></li>
-                            <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                            <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
                         </ul>
-                        <span class="me-2">Username</span> <!-- Thêm phần tử span chứa tên người dùng -->
+                        <span class="me-2" th:text="${member.maTV}"></span>
                     </div>
                 </div>
             </div>

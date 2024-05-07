@@ -35,7 +35,7 @@
                       Sign up
                     </p>
 
-                    <form class="mx-1 mx-md-4" id="registerForm" th:action="@{/register/save}" th:object="${member}">
+                    <form class="mx-1 mx-md-4" id="registerForm" method="post" th:action="@{/register}" th:object="${member}">
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div
@@ -45,9 +45,12 @@
                           <input
                             type="text"
                             id="username"
+                            name="username"
                             class="form-control"
                             th:field="*{maTV}"
                           />
+                          <p th:errors = "*{maTV}" class="text-danger"
+                             th:if="${#fields.hasErrors('maTV')}"></p>
                           <label class="form-label" for="username"
                             >Your Name</label
                           >
@@ -63,9 +66,12 @@
                           <input
                             type="email"
                             id="email"
+                            name="email"
                             class="form-control"
                             th:field="*{email}"
                           />
+                          <p th:errors = "*{email}" class="text-danger"
+                             th:if="${#fields.hasErrors('email')}"></p>
                           <label class="form-label" for="email"
                             >Your Email</label
                           >
@@ -81,13 +87,16 @@
                           <input
                             type="password"
                             id="password"
+                            name="password"
                             th:field="*{password}"
                             class="form-control"
                           />
+                          <p th:errors = "*{password}" class="text-danger"
+                             th:if="${#fields.hasErrors('password')}"></p>
                           <label class="form-label" for="password"
                             >Password</label
                           >
-                          <button type="button" id="togglePassword" onclick="togglePasswordVisibility()" class="btn btn-outline-secondary">
+                          <button type="button"class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">
                             <i id="passwordIcon" class="fas fa-eye"></i>
                           </button>
                         </div>
@@ -125,7 +134,6 @@
                           id="registerButton"
                           class="btn btn-primary btn-lg"
 
-                          onclick="showRegister()"
                         >
                           Register
                         </button>
