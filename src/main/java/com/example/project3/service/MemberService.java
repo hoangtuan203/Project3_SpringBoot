@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public interface MemberService {
     List<Member> getAllMember();
     Member getPasswordByMaTV(int maTV);
-    Member loginMember(String email, String password);
+    Member loginMember(int maTV, String password);
 
 }

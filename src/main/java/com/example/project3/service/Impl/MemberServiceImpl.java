@@ -25,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member loginMember(String email, String password) {
-        Member member = memberRepository.findByEmail(email);
+    public Member loginMember(int maTV, String password) {
+        Member member = memberRepository.findById(maTV);
         // Kiểm tra xem người dùng có tồn tại và mật khẩu có đúng không
         if (member != null && member.getPassword().equals(password)) {
             System.out.println(member);

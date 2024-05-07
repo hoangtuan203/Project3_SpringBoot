@@ -89,8 +89,8 @@ public class MemberController {
     
 
     @PostMapping("/login")
-    public String loginMember(@RequestParam String email, @RequestParam String password, Model model) {
-        Member member = memberService.loginMember(email, password);
+    public String loginMember(@RequestParam int maTV, @RequestParam String password, Model model) {
+        Member member = memberService.loginMember(maTV, password);
         if (member != null) {
             System.out.println(member);
             model.addAttribute("member", member); // member là đối tượng thành viên đã đăng nhập thành công
