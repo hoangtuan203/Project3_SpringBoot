@@ -7,17 +7,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.example.project3.models.Member;
-
 import com.example.project3.service.MemberService;
 
 
 @Controller
 public class LoginController {
-     private MemberService memberService;
+    private MemberService memberService;
 
-     public LoginController(MemberService memberService) {
+    public LoginController(MemberService memberService) {
         this.memberService = memberService;
     }
     @PostMapping("/login")

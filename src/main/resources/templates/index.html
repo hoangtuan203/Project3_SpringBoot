@@ -82,7 +82,7 @@
             <h4 class="mb-4">QUẢN LÝ ĐẶT CHỖ </h4>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                <button class="btn btn-primary ml-2" type="button"><i class="bi bi-search"></i></button>
+                <button class="btn btn-primary ml-2" type="button" onclick="search()"><i class="bi bi-search"></i></button>
             </div>
         
             <!-- Thêm các nút vào đây -->
@@ -101,7 +101,7 @@
                         <th scope="col" class="text-center">Trạng Thái</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="body_table">
                     <tr>
                         <td class="text-center">1</td>
                         <td class="text-center">Laptop</td>
@@ -124,6 +124,6 @@
         <script src="js/jquery.sticky.js"></script>
         <script src="js/click-scroll.js"></script>
         <script src="js/custom.js"></script>
-
+        <script src="js/searchTB.js"></script>
     </body>
 </html>
