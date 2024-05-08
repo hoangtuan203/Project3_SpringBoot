@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lý Đặt Chỗ</title>
+        <title>Hồ sơ </title>
 
         <!-- CSS FILES -->        
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +35,57 @@
                 background-color: #367d96; /* Màu nền khi hover */
                 color: white; /* Màu chữ khi hover */
             }
+            .footer {
+                background-color: #343a40;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+            }
         </style>
     </head>
 
     <body>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="container">
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-10 bg-white p-4">
+                            <h2 class="text-center mb-4">Hồ sơ thành viên</h2>
+                            <table class="table table-bordered mx-auto ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Mã thành viên</th>
+                                        <th scope="col">Họ tên</th>
+                                        <th scope="col">Khoa</th>
+                                        <th scope="col">Ngành</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Email</th>
+
+
+                                    </tr>
+                                </thead>
+                                 <tbody>
+                                            <tr th:each="thanhVien : ${thanhVien}">
+                                                <td th:text="${thanhVien.maTV}"></td>
+                                                <td th:text="${thanhVien.tenTV}"></td>
+                                                <td th:text="${thanhVien.khoa}"></td>
+                                                <td th:text="${thanhVien.nganh}"></td>
+                                                <td th:text="${thanhVien.sdt}"></td>
+                                                <td th:text="${thanhVien.email}"></td>
+
+
+                                            </tr>            
+                                        </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <div>
             <!-- Header -->
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -63,62 +110,37 @@
                         <div class="dropdown">
                             <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                               <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
                                 <li><a class="dropdown-item" th:href="@{/doimatkhau}">Đổi Mật Khẩu</a></li>
                                 <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
                                 <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
                                 <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
                                 <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
                             </ul>
-                            <span class="me-2" th:text="${member.maTV}"></span>
                         </div>
-                    </div>              
-              </div>
-        </nav>
-
-        <div class="container mt-4">
-            <h4 class="mb-4">QUẢN LÝ ĐẶT CHỖ </h4>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                <button class="btn btn-primary ml-2" type="button" onclick="search()"><i class="bi bi-search"></i></button>
-            </div>
-        
-            <!-- Thêm các nút vào đây -->
-            <div class="d-flex justify-content-center align-items-center my-3">
-                <button class="btn btn-success me-2 m-2"><i class="bi bi-plus">Mượn thiết bị</i></button>
-                <button class="btn btn-warning"><i class="bi bi-trash">Đặt Chỗ</i></button>
-            </div>
-        
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" class="text-center">STT</th>
-                        <th scope="col" class="text-center">Mã Thiết Bị</th>
-                        <th scope="col" class="text-center">Tên Thiết Bị</th>
-                        <th scope="col" class="text-center">Mô Tả</th>
-                        <th scope="col" class="text-center">Trạng Thái</th>
-                    </tr>
-                </thead>
-                <tbody class="body_table">
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Laptop</td>
-                        <td class="text-center">Máy tính</td>
-                        <td class="text-center">5</td>
-                        <td class="text-center">còn</td>
-                    </tr>
-                    <!-- Thêm các hàng khác nếu cần thiết -->
-                </tbody>
-            </table>
+                    </div>
+                </div>
+            </nav>
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-muted text-center mb-0">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a>
+                                2024</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </div>
-    <!-- JAVASCRIPT FILES -->
-
+        <!-- JAVASCRIPT FILES -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery.sticky.js"></script>
         <script src="js/click-scroll.js"></script>
         <script src="js/custom.js"></script>
-        <script src="js/searchTB.js"></script>
+
     </body>
 </html>

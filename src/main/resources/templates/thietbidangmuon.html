@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="css/templatemo-topic-listing.css" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .main-panel {
+                min-height: 100vh;
+                padding-top: 60px; /* Height of the fixed navbar */
+            }
+            .content-wrapper {
+                padding: 20px;
+            }
+            .table-container {
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            .footer {
+                background-color: #343a40;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+            }
+            .navbar {
+                background-color: #367d96; /* Màu nền của header */
+                color: white; /* Màu chữ của header */
+            }
+
+            .navbar .navbar-toggler-icon {
+                color: white; /* Màu biểu tượng toggle */
+            }
+
+            .dropdown-menu a.dropdown-item:hover {
+                background-color: #367d96; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <!-- Header -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi-back"></i>
+                        <span class="ms-2">MEMBER</span>
+                    </a>
+
+                    <!-- Button toggler for small screens -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Phần trái của thanh điều hướng -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto"></ul>
+                    </div>
+
+                    <!-- Phần phải của thanh điều hướng -->
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
+                                <li><a class="dropdown-item" th:href="@{/doimatkhau}">Đổi Mật Khẩu</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
+                                <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10">
+                            <div class="bg-white p-4 table-container">
+                                <h2 class="text-center mb-4">Thiết bị đang mượn</h2>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Mã thiết bị</th>
+                                            <th scope="col">Tên thiết bị</th>
+                                            <th scope="col">Mô tả thiết bị</th>
+                                            <th scope="col">Thời gian mượn</th>
+                                            <th scope="col">Thời gian trả</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="thongTin : ${thongTinList}">
+                                            <td th:text="${thongTin.thietBi.maTB}"></td>
+                                            <td th:text="${thongTin.thietBi.tenTB}"></td>
+                                            <td th:text="${thongTin.thietBi.moTaTB}"></td>
+                                            <td th:text="${thongTin.tgMuon}"></td>
+                                            <td th:text="${thongTin.tgTra}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-muted text-center mb-0">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a>
+                                2024</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- jQuery và các script Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+
+    </body>
+</html>
+
