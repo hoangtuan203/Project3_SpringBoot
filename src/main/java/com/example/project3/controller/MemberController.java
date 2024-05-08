@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.project3.models.Member;
 import com.example.project3.models.Thietbi;
 import com.example.project3.models.ThongtinSD;
@@ -186,6 +187,7 @@ public class MemberController {
     }
     // xu ly dang ky tai khoan
 
+
     @PostMapping("/login")
     public String loginMember(@RequestParam int maTV, @RequestParam String password, Model model) {
         Member member = memberService.loginMember(maTV, password);
@@ -199,4 +201,5 @@ public class MemberController {
             return "redirect:/login?error";
         }
     }
+
 }

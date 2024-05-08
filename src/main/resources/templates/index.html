@@ -72,16 +72,53 @@
                             </ul>
                             <span class="me-2" th:text="${member.maTV}"></span>
                         </div>
-                    </div>
-                </div>
-            </nav>
+                    </div>              
+              </div>
+        </nav>
+
+        <div class="container mt-4">
+            <h4 class="mb-4">QUẢN LÝ ĐẶT CHỖ </h4>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                <button class="btn btn-primary ml-2" type="button" onclick="search()"><i class="bi bi-search"></i></button>
+            </div>
+        
+            <!-- Thêm các nút vào đây -->
+            <div class="d-flex justify-content-center align-items-center my-3">
+                <button class="btn btn-success me-2 m-2"><i class="bi bi-plus">Mượn thiết bị</i></button>
+                <button class="btn btn-warning"><i class="bi bi-trash">Đặt Chỗ</i></button>
+            </div>
+        
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">STT</th>
+                        <th scope="col" class="text-center">Mã Thiết Bị</th>
+                        <th scope="col" class="text-center">Tên Thiết Bị</th>
+                        <th scope="col" class="text-center">Mô Tả</th>
+                        <th scope="col" class="text-center">Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody class="body_table">
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td class="text-center">Laptop</td>
+                        <td class="text-center">Máy tính</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">còn</td>
+                    </tr>
+                    <!-- Thêm các hàng khác nếu cần thiết -->
+                </tbody>
+            </table>
         </div>
-        <!-- JAVASCRIPT FILES -->
+    </div>
+    <!-- JAVASCRIPT FILES -->
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery.sticky.js"></script>
         <script src="js/click-scroll.js"></script>
         <script src="js/custom.js"></script>
-
+        <script src="js/searchTB.js"></script>
     </body>
 </html>
