@@ -76,6 +76,42 @@
                 background-color: #367d96; /* Màu nền khi hover */
                 color: white; /* Màu chữ khi hover */
             }
+            .alert {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border: 1px solid transparent;
+                border-radius: 0.25rem;
+            }
+
+            .alert-success {
+                color: #155724;
+                background-color: #d4edda;
+                border-color: #c3e6cb;
+            }
+
+            .alert-danger {
+                color: #721c24;
+                background-color: #f8d7da;
+                border-color: #f5c6cb;
+            }
+
+            .alert-dismissible {
+                position: relative;
+                padding-right: 3.5rem;
+            }
+
+            .close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 0.75rem 1.25rem;
+                color: inherit;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+            }
+
+
         </style>
     </head>
     <body>
@@ -104,11 +140,11 @@
                         <div class="dropdown">
                             <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" th:href="@{/hosothanhvien}">Hồ sơ thành viên</a></li>
-                                <li><a class="dropdown-item" th:href="@{/doimatkhau}">Đổi Mật Khẩu</a></li>
-                                <li><a class="dropdown-item" th:href="@{/trangthaivipham}">Trạng thái vi phạm</a></li>
-                                <li><a class="dropdown-item" th:href="@{/datchothietbi}">Đặt chỗ thiết bị</a></li>
-                                <li><a class="dropdown-item"  th:href="@{/thietbidangmuon}">Thiết bị đang mượn</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/doimatkhau?maTV=' + ${member.maTV}}">Đổi Mật Khẩu</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
                                 <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
                             </ul>
                         </div>
@@ -119,7 +155,22 @@
         <!-- Form Đổi Mật Khẩu -->
         <div class="container mk">
             <h2 class="text-center mb-4">Đổi Mật Khẩu</h2>
-            <form>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong th:text="${error}"></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong th:text="${successMessage}"></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/reserPassword" method="POST">
+                <!-- Trường ẩn để chứa mã thành viên -->
+                <input type="hidden" id="maTV" name="maTV" th:value="${member.maTV}">
+
                 <div class="form-group">
                     <label for="currentPassword">Mật khẩu hiện tại:</label>
                     <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
@@ -135,6 +186,7 @@
                 <button type="submit" class="btn btn-primary">Đổi Mật Khẩu</button>
             </form>
         </div>
+
         <footer class="footer">
             <div class="container">
                 <div class="row">
@@ -155,6 +207,17 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/click-scroll.js"></script>
         <script src="js/custom.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                // Đóng thông báo sau 5 giây
+                $(".alert").delay(5000).fadeOut("slow");
+            });
+        </script>
+
+
 
     </body>
 </html>
