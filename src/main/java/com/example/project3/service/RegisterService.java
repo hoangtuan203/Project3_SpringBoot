@@ -11,11 +11,6 @@ import com.example.project3.repository.MemberRepository;
 @Service
 public interface RegisterService {
 
-    void saveMember(Member member);
-    Member findMemberByEmail(String email);
-    List<Member> findAllMembers();
-
-    Member findMemberByMaTV(int maTV);
-
-    boolean existsByMaTV(int maTV);
+    Member saveMember(Member member);
+    boolean isMemberExit(int maTV);
 }

@@ -35,4 +35,9 @@ public class LoginController {
         model.addAttribute("member", member);
         return "index";
     }
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("member", new Member());
+        return "login";
+    }
 }

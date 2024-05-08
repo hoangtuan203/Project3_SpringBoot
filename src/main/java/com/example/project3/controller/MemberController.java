@@ -52,10 +52,10 @@ public class MemberController {
         return new String();
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String login(Model model) {
+//        return "login";
+//    }
 
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
@@ -68,9 +68,9 @@ public class MemberController {
 //        model.addAttribute("members", new Member());
 //        return "register";
 //    }
-    @GetMapping("/newform")
+    @GetMapping("/forgotPassword")
     public String showForm() {
-        return "newform";
+        return "forgotPassword";
     }
 
     @GetMapping("/doimatkhau")
@@ -177,7 +177,7 @@ public class MemberController {
                     matv);
         }
         // Trả về tên của trang HTML hiện tại
-        return "newform";
+        return "forgotPassword";
     }
 
     // Phương thức để kiểm tra email có đúng định dạng hay không
@@ -188,18 +188,18 @@ public class MemberController {
     // xu ly dang ky tai khoan
 
 
-    @PostMapping("/login")
-    public String loginMember(@RequestParam int maTV, @RequestParam String password, Model model) {
-        Member member = memberService.loginMember(maTV, password);
-        if (member != null) {
-            System.out.println(member);
-            model.addAttribute("member", member); // member là đối tượng thành viên đã đăng nhập thành công
-
-            return "index";
-        } else {
-
-            return "redirect:/login?error";
-        }
-    }
+//    @PostMapping("/login")
+//    public String loginMember(@RequestParam int maTV, @RequestParam String password, Model model) {
+//        Member member = memberService.loginMember(maTV, password);
+//        if (member != null) {
+//            System.out.println(member);
+//            model.addAttribute("member", member); // member là đối tượng thành viên đã đăng nhập thành công
+//
+//            return "index";
+//        } else {
+//
+//            return "redirect:/login?error";
+//        }
+//    }
 
 }
