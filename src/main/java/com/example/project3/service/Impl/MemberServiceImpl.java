@@ -9,6 +9,7 @@ import com.example.project3.service.MemberService;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+
     private MemberRepository memberRepository;
 
     public MemberServiceImpl(MemberRepository memberRepository) {
@@ -16,13 +17,27 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean changePassword(int maTV, String currentPassword, String newPassword) {
+        Member member = memberRepository.findById(maTV);
+
+        if (member != null && member.getPassword().equals(currentPassword)) {
+            member.setPassword(newPassword);
+            memberRepository.save(member); 
+            return true; 
+        }
+        return false; 
+    }
+
+    @Override
     public List<Member> getAllMember() {
         return memberRepository.findAll();
     }
+
     @Override
     public Member getPasswordByMaTV(int maTV) {
         return memberRepository.findById(maTV);
     }
+
     @Override
     public Member loginMember(int maTV, String password) {
         Member member = memberRepository.findById(maTV);
@@ -32,8 +47,4 @@ public class MemberServiceImpl implements MemberService {
         }
         return null; // Trả về null nếu đăng nhập thất bại
     }
-    
-    
-    
-   
 }

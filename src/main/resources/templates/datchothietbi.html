@@ -85,7 +85,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
-                                <li><a class="dropdown-item" th:href="@{/doimatkhau}">Đổi Mật Khẩu</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/doimatkhau?maTV=' + ${member.maTV}}">Đổi Mật Khẩu</a></li>
                                 <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
                                 <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
                                 <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
@@ -109,20 +109,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <tr>
                                             <th scope="col">Mã thiết bị</th>
                                             <th scope="col">Tên thiết bị</th>
-                                            <th scope="col">Mô tả thiết bị</th>
-                                            <th scope="col" class="text-center">Đặt chỗ thiết bị</th>
+                                            <th scope="col">Thời gian đặt chỗ</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr th:each="device : ${thietBi}">
-                                            <td th:text="${device.maTB}"></td>
-                                            <td th:text="${device.tenTB}"></td>
-                                            <td th:text="${device.moTaTB}"></td>
-                                            <td class="text-center">
-                                                <button type="submit" class="btn btn-primary">Mượn</button>
-                                            </td>
-
-                                        </tr>            
+                                     <tbody>
+                                        <tr th:each="thongTin : ${thongTinList}">
+                                            <td th:text="${thongTin.thietBi.maTB}"></td>
+                                            <td th:text="${thongTin.thietBi.tenTB}"></td>
+                                            <td th:text="${thongTin.tgDatCho}"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

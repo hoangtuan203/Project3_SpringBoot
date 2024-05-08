@@ -45,6 +45,43 @@
     </head>
 
     <body>
+        <div>
+            <!-- Header -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi-back"></i>
+                        <span class="ms-2">MEMBER</span>
+                    </a>
+
+                    <!-- Button toggler for small screens -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Phần trái của thanh điều hướng -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto"></ul>
+                    </div>
+
+                    <!-- Phần phải của thanh điều hướng -->
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/doimatkhau?maTV=' + ${member.maTV}}">Đổi Mật Khẩu</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
+                                <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+        </div>
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="container">
@@ -85,42 +122,6 @@
                 </div>
 
             </div>
-        </div>
-        <div>
-            <!-- Header -->
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container">
-                    <a class="navbar-brand" href="#">
-                        <i class="bi-back"></i>
-                        <span class="ms-2">MEMBER</span>
-                    </a>
-
-                    <!-- Button toggler for small screens -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <!-- Phần trái của thanh điều hướng -->
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav me-auto"></ul>
-                    </div>
-
-                    <!-- Phần phải của thanh điều hướng -->
-                    <div class="d-flex align-items-center">
-                        <div class="dropdown">
-                            <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
-                                <li><a class="dropdown-item" th:href="@{/doimatkhau}">Đổi Mật Khẩu</a></li>
-                                <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
-                                <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
-                                <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
-                                <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </nav>
             <footer class="footer">
                 <div class="container">
                     <div class="row">
@@ -132,6 +133,7 @@
                 </div>
             </footer>
         </div>
+        
         <!-- JAVASCRIPT FILES -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>

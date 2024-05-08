@@ -52,41 +52,73 @@ public class MemberController {
         return new String();
     }
 
-//    @GetMapping("/login")
-//    public String login(Model model) {
-//        return "login";
-//    }
-
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
 
         return "loginSuccessful";
     }
 
-//    @GetMapping("/register")
-//    public String register(Model model) {
-//        model.addAttribute("members", new Member());
-//        return "register";
-//    }
     @GetMapping("/forgotPassword")
     public String showForm() {
         return "forgotPassword";
     }
 
     @GetMapping("/doimatkhau")
-    public String showResetPassword() {
+    public String showResetPassword(Model model, @RequestParam("maTV") String maTV) {
+        int maThanhVien = Integer.parseInt(maTV);
+
+        Member tv2 = memBerRepository.findById(maThanhVien);
+        model.addAttribute("member", tv2);
+
         return "doimatkhau";
     }
 
+    @PostMapping("/reserPassword")
+    public String changePassword(@RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmNewPassword") String confirmNewPassword,
+            Model model, HttpSession session) {
+
+        int maTV = (int) session.getAttribute("loggedInMaTV");
+
+        if (!newPassword.equals(confirmNewPassword)) {
+            model.addAttribute("error", "Mật khẩu mới không khớp.");
+            Member tv = memBerRepository.findById(maTV);
+            model.addAttribute("member", tv);
+            return "doimatkhau";
+        }
+
+        if (maTV != 0) {
+            boolean passwordChanged = memberService.changePassword(maTV, currentPassword, newPassword);
+            if (passwordChanged) {
+                Member tv2 = memBerRepository.findById(maTV);
+                model.addAttribute("member", tv2);
+                model.addAttribute("successMessage", "Thay đổi mật khẩu thành công.");
+
+                return "doimatkhau"; 
+            } else {
+                Member tv3 = memBerRepository.findById(maTV);
+                model.addAttribute("member", tv3);
+                model.addAttribute("error", "Mật khẩu hiện tại không đúng.");
+                return "doimatkhau";
+            }
+        }
+
+        Member tv4 = memBerRepository.findById(maTV);
+        model.addAttribute("member", tv4);
+        return "doimatkhau";
+    }
+
+//    
     @GetMapping("/hosothanhvien")
     public String showProfile(Model model, @RequestParam("maTV") int maTV) {
         Member tv = memBerRepository.findById(maTV);
-        
+
         if (tv != null) {
             model.addAttribute("thanhVien", tv);
             model.addAttribute("member", tv);
         }
-        
+
         return "hosothanhvien";
     }
 
@@ -98,21 +130,20 @@ public class MemberController {
             tv.setMaTV(maThanhVien);
 
             Member tv2 = memBerRepository.findById(maThanhVien);
-            // Truy vấn danh sách Xuly của thành viên từ Repository
             List<Xuly> xuLyList = xuLyRepository.findByThanhVien(tv);
 
             if (!xuLyList.isEmpty()) {
-                // Đưa danh sách các Xuly vào model để hiển thị trên view
                 model.addAttribute("xuLyList", xuLyList);
                 model.addAttribute("member", tv2);
                 return "trangthaivipham";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy thông tin xử lý cho thành viên có mã " + maTV);
+                model.addAttribute("member", tv2);
                 return "trangthaivipham";
             }
         } catch (NumberFormatException e) {
             model.addAttribute("errorMessage", "Mã thành viên không hợp lệ: " + maTV);
-            return "trangthaivipham";
+            return "index";
         }
     }
 
@@ -127,29 +158,44 @@ public class MemberController {
 
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 if (!userList.isEmpty()) {
-                    model.addAttribute("thongTinList", userList); // Thêm danh sách ThongtinSD vào model
+                    model.addAttribute("thongTinList", userList);
                     model.addAttribute("member", tv3);
 
-                    return "thietbidangmuon"; // Trả về view để hiển thị thông tin
+                    return "thietbidangmuon";
                 } else {
-                    return "thietbidangmuon"; // Trả về view với thông báo không có thông tin
+                    model.addAttribute("member", tv3);
+                    return "thietbidangmuon";
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Invalid maTV format: " + maTV);
             }
         }
-        return "thietbidangmuon"; // Trả về view mặc định nếu có lỗi
+        return "thietbidangmuon";
     }
 
     @GetMapping("/datchothietbi")
     public String datchotbpage(Model model, @RequestParam("maTV") String maTV) {
-        // Lấy danh sách tất cả các thiết bị từ cơ sở dữ liệu
-        int maTVInt = Integer.parseInt(maTV);
-        Member tv3 = memBerRepository.findById(maTVInt);
-        List<Thietbi> danhSachThietBi = thietBiRepository.findAll();
-        // Truyền danh sách các thiết bị qua model
-        model.addAttribute("thietBi", danhSachThietBi);
-        model.addAttribute("member", tv3);
+        if (maTV != null && !maTV.isEmpty()) {
+            try {
+                int maTVInt = Integer.parseInt(maTV);
+                Member tv = new Member();
+                tv.setMaTV(maTVInt);
+                Member tv3 = memBerRepository.findById(maTVInt);
+
+                List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
+                if (!userList.isEmpty()) {
+                    model.addAttribute("thongTinList", userList);
+                    model.addAttribute("member", tv3);
+
+                    return "datchothietbi";
+                } else {
+                    model.addAttribute("member", tv3);
+                    return "datchothietbi";
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid maTV format: " + maTV);
+            }
+        }
         return "datchothietbi";
     }
 
@@ -185,21 +231,6 @@ public class MemberController {
         // Kiểm tra xem số điện thoại có 10 số không
         return ma != null && ma.matches("^\\d{10}$");
     }
-    // xu ly dang ky tai khoan
 
-
-//    @PostMapping("/login")
-//    public String loginMember(@RequestParam int maTV, @RequestParam String password, Model model) {
-//        Member member = memberService.loginMember(maTV, password);
-//        if (member != null) {
-//            System.out.println(member);
-//            model.addAttribute("member", member); // member là đối tượng thành viên đã đăng nhập thành công
-//
-//            return "index";
-//        } else {
-//
-//            return "redirect:/login?error";
-//        }
-//    }
-
+//   
 }
