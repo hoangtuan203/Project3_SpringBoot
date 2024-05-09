@@ -38,7 +38,8 @@ public class ThongTinSD {
 
     }
 
-    public ThongTinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
+    public ThongTinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
+            Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.thietBi = thietBi;
@@ -48,7 +49,8 @@ public class ThongTinSD {
         this.tgDatCho = tgDatCho;
     }
 
-    public ThongTinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
+    public ThongTinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
+            Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.tgVao = tgVao;
