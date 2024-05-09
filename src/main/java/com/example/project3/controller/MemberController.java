@@ -1,5 +1,7 @@
 package com.example.project3.controller;
-
+import java.util.Date;
+import java.security.SecureRandom;
+import java.sql.Timestamp;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +18,14 @@ import com.example.project3.repository.ThongTinSDRepository;
 import com.example.project3.repository.XuLyRepository;
 import com.example.project3.service.EmailService;
 import com.example.project3.service.MemberService;
+import com.example.project3.models.ThongTinSD;
+import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +33,9 @@ import org.springframework.validation.BindingResult;
 
 @Controller
 public class MemberController {
+
+    private static final String CHARACTERS = "0123456789";
+    private static final int KEY_LENGTH = 8;
 
     private MemberService memberService;
     @Autowired
@@ -51,11 +61,52 @@ public class MemberController {
     public String getMethodName(@RequestParam String param) {
         return new String();
     }
+    
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+    @PostMapping("/index")
+    public String datCho(@RequestParam String ngay, @RequestParam String gio, @RequestParam String idMember,@RequestParam  String maTBHiden,RedirectAttributes redirectAttributes) throws ParseException {
+        String dateString = ngay+" "+gio; 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = sdf.parse(dateString); // Chuyển đổi chuỗi sang đối tượng Date
+        Timestamp timestamp = new Timestamp(date.getTime()); // Chuyển đổi đối tượng Date sang Timestamp
+        ThongTinSD ttsd = new ThongTinSD();
+        int maTTSD = Integer.parseInt(generateRandomKey());
+        ttsd.setMaTT(maTTSD);
+        ttsd.setMaTB(Integer.parseInt(maTBHiden));
+        ttsd.setMaTV(Integer.parseInt(idMember));
+        ttsd.setTgDatCho(timestamp);
+        memberService.insert(ttsd);
+        int mtv =Integer.parseInt(idMember);
+        System.out.println(mtv);
+        Member member = memberService.getMemberById(mtv);
+
+        // model.addAttribute("member", member);
+        // System.out.println(member.getTenTV());
+        redirectAttributes.addFlashAttribute("member", member);
+        return "redirect:/index";
+        
+    }   
+    public  String generateRandomKey() {
+        SecureRandom secureRandom = new SecureRandom();
+        StringBuilder stringBuilder = new StringBuilder(KEY_LENGTH);
+
+        for (int i = 0; i < KEY_LENGTH; i++) {
+            int randomIndex = secureRandom.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(randomIndex);
+            stringBuilder.append(randomChar);
+        }
+
+        return stringBuilder.toString();
+
 
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
 
         return "loginSuccessful";
+
     }
 
     @GetMapping("/forgotPassword")

@@ -5,14 +5,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.project3.models.Member;
+import com.example.project3.models.ThietBi;
+import com.example.project3.models.ThongTinSD;
+
 import java.util.List;
-
-
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Integer>,CrudRepository<Member, Integer>{
-    
-    Member findByMaTV(int maTV);
-    Member findByEmail(String email);
-
-    boolean existsByMaTV(int maTV);
+public interface TTSDRepository extends JpaRepository<ThongTinSD,Integer>,CrudRepository<ThongTinSD, Integer> {
+    ThongTinSD save(ThongTinSD thongTinSD);
 }
