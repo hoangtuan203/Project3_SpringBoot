@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.project3.models.Member;
-import com.example.project3.models.Thietbi;
-import com.example.project3.models.ThongtinSD;
 import com.example.project3.models.Xuly;
 import com.example.project3.repository.MemberRepository;
 import com.example.project3.repository.ThietBiRepository;
@@ -75,8 +73,8 @@ public class MemberController {
         ThongTinSD ttsd = new ThongTinSD();
         int maTTSD = Integer.parseInt(generateRandomKey());
         ttsd.setMaTT(maTTSD);
-        ttsd.setMaTB(Integer.parseInt(maTBHiden));
-        ttsd.setMaTV(Integer.parseInt(idMember));
+//        ttsd.setMaTB(Integer.parseInt(maTBHiden));
+//        ttsd.setMaTV(Integer.parseInt(idMember));
         ttsd.setTgDatCho(timestamp);
         memberService.insert(ttsd);
         int mtv =Integer.parseInt(idMember);
@@ -101,7 +99,7 @@ public class MemberController {
 
         return stringBuilder.toString();
 
-
+    }
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
 
@@ -118,7 +116,7 @@ public class MemberController {
     public String showResetPassword(Model model, @RequestParam("maTV") String maTV) {
         int maThanhVien = Integer.parseInt(maTV);
 
-        Member tv2 = memBerRepository.findById(maThanhVien);
+        Member tv2 = memBerRepository.findById(maThanhVien).orElse(null);;
         model.addAttribute("member", tv2);
 
         return "doimatkhau";
@@ -134,7 +132,7 @@ public class MemberController {
 
         if (!newPassword.equals(confirmNewPassword)) {
             model.addAttribute("error", "Mật khẩu mới không khớp.");
-            Member tv = memBerRepository.findById(maTV);
+            Member tv = memBerRepository.findById(maTV).orElse(null);;
             model.addAttribute("member", tv);
             return "doimatkhau";
         }
@@ -142,20 +140,20 @@ public class MemberController {
         if (maTV != 0) {
             boolean passwordChanged = memberService.changePassword(maTV, currentPassword, newPassword);
             if (passwordChanged) {
-                Member tv2 = memBerRepository.findById(maTV);
+                Member tv2 = memBerRepository.findById(maTV).orElse(null);;
                 model.addAttribute("member", tv2);
                 model.addAttribute("successMessage", "Thay đổi mật khẩu thành công.");
 
                 return "doimatkhau"; 
             } else {
-                Member tv3 = memBerRepository.findById(maTV);
+                Member tv3 = memBerRepository.findById(maTV).orElse(null);;
                 model.addAttribute("member", tv3);
                 model.addAttribute("error", "Mật khẩu hiện tại không đúng.");
                 return "doimatkhau";
             }
         }
 
-        Member tv4 = memBerRepository.findById(maTV);
+        Member tv4 = memBerRepository.findById(maTV).orElse(null);;
         model.addAttribute("member", tv4);
         return "doimatkhau";
     }
@@ -163,7 +161,7 @@ public class MemberController {
 //    
     @GetMapping("/hosothanhvien")
     public String showProfile(Model model, @RequestParam("maTV") int maTV) {
-        Member tv = memBerRepository.findById(maTV);
+        Member tv = memBerRepository.findById(maTV).orElse(null);;
 
         if (tv != null) {
             model.addAttribute("thanhVien", tv);
@@ -180,7 +178,7 @@ public class MemberController {
             Member tv = new Member();
             tv.setMaTV(maThanhVien);
 
-            Member tv2 = memBerRepository.findById(maThanhVien);
+            Member tv2 = memBerRepository.findById(maThanhVien).orElse(null);;
             List<Xuly> xuLyList = xuLyRepository.findByThanhVien(tv);
 
             if (!xuLyList.isEmpty()) {
@@ -205,9 +203,9 @@ public class MemberController {
                 int maTVInt = Integer.parseInt(maTV);
                 Member tv = new Member();
                 tv.setMaTV(maTVInt);
-                Member tv3 = memBerRepository.findById(maTVInt);
+                Member tv3 = memBerRepository.findById(maTVInt).orElse(null);;
 
-                List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
+                List<ThongTinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 if (!userList.isEmpty()) {
                     model.addAttribute("thongTinList", userList);
                     model.addAttribute("member", tv3);
@@ -231,9 +229,9 @@ public class MemberController {
                 int maTVInt = Integer.parseInt(maTV);
                 Member tv = new Member();
                 tv.setMaTV(maTVInt);
-                Member tv3 = memBerRepository.findById(maTVInt);
+                Member tv3 = memBerRepository.findById(maTVInt).orElse(null);;
 
-                List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
+                List<ThongTinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 if (!userList.isEmpty()) {
                     model.addAttribute("thongTinList", userList);
                     model.addAttribute("member", tv3);

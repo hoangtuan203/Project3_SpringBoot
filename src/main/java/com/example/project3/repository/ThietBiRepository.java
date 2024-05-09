@@ -4,7 +4,7 @@
  */
 package com.example.project3.repository;
 
-import com.example.project3.models.Thietbi;
+import com.example.project3.models.ThietBi;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Repository;
  * @author Lenovo
  */
 @Repository
-public interface ThietBiRepository extends JpaRepository<Thietbi, Integer> {
+public interface ThietBiRepository extends JpaRepository<ThietBi, Integer> {
 
     @Override
-    Optional<Thietbi> findById(Integer id);
+    Optional<ThietBi> findById(Integer id);
 
     @Override
-    List<Thietbi> findAll();
+    List<ThietBi> findAll();
 
 }
