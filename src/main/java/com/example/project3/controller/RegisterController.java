@@ -21,60 +21,85 @@ import java.util.regex.Pattern;
 @Controller
 
 public class RegisterController {
-    private static final String EMAIL_REGEX =
-            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
 
-    @Autowired
-    RegisterService registerService;
-    @Autowired
-    public void setMemberService(RegisterService registerService) {
+    // Biểu thức chính quy cho mật khẩu (ít nhất 8 ký tự và ít nhất một chữ cái và một số)
+    private static final String PASSWORD_REGEX = "^.{1,10}$";
+
+    private static final String PHONE_REGEX =  "^0\\d{9}$";
+
+    private final RegisterService registerService;
+
+    public RegisterController(RegisterService registerService) {
         this.registerService = registerService;
     }
+
     @GetMapping("/register")
-    public String register(Model model) {
+    public String registerForm(Model model) {
         model.addAttribute("member", new Member());
         return "register";
     }
+
     @PostMapping("/register")
-    public String register(@RequestParam int maTV, @RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword, Model model) {
-        if (isValidEmail(email) && isValidPassword(password) && password.equals(confirmPassword)) {
-            if (registerService.existsByMaTV(maTV)) {
-                Member existingMember = registerService.findMemberByMaTV(maTV);
-                existingMember.setEmail(email);
-                existingMember.setPassword(password);
-                registerService.saveMember(existingMember);
-                model.addAttribute("member", existingMember);
-                return "login"; 
-            } else {
-                Member newMember = new Member();
-                newMember.setMaTV(maTV);
-                newMember.setEmail(email);
-                newMember.setPassword(password);
-                registerService.saveMember(newMember);
-                model.addAttribute("member", newMember);
-                return "login"; 
-            }
-        } else {
-            model.addAttribute("error", "Email hoặc mật khẩu không hợp lệ hoặc mật khẩu không khớp.");
-            return "register"; 
+    public String registerSubmit(@ModelAttribute("member") @Validated Member member, BindingResult bindingResult, Model model) {
+        // Kiểm tra nếu có lỗi nhập liệu từ phía Spring Validation
+//        if (bindingResult.hasErrors()) {
+//            return "register"; // Trả về trang đăng ký với các thông báo lỗi
+//        }
+//
+        if (registerService.isMemberExit(member.getMaTV())) {
+            model.addAttribute("idError", "Member ID already exists");
+            return "register";
         }
+        if(member.getTenTV().equals("")){
+            model.addAttribute("nameNull", "Please enter name");
+            return "register";
+        }
+
+        if(member.getSdt().equals("")){
+            model.addAttribute("phoneNull", "Please enter phone");
+            return "register";
+        }
+
+        if(!isValidePhone(member.getSdt())){
+            model.addAttribute("phoneError", "Nhập phone đúng định dạng");
+            return "register";
+        }
+
+
+        // Kiểm tra tính hợp lệ của email và mật khẩu
+        if (!isValidEmail(member.getEmail())) {
+            model.addAttribute("emailError", "Invalid email format");
+            return "register";
+        }
+//
+//
+
+        if(member.getPassword().equals("")){
+            model.addAttribute("passNull", "Please enter password");
+            return "register";
+        }
+
+        if (!isValidPassword(member.getPassword())) {
+            model.addAttribute("passwordError", "Password có tối đa 10 kí tự");
+            return "register";
+        }
+
+        registerService.saveMember(member);
+        return "redirect:/login";
     }
 
 
-
-    //regex
-
-    public static boolean isValidEmail(String email) {
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+    // Phương thức để kiểm tra tính hợp lệ của email
+    private boolean isValidEmail(String email) {
+        return email != null && email.matches(EMAIL_REGEX);
     }
 
-    public static boolean isValidPassword(String password) {
-        Pattern pattern = Pattern.compile(PASSWORD_REGEX);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
+    // Phương thức để kiểm tra tính hợp lệ của mật khẩu
+    private boolean isValidPassword(String password) {
+        return password != null && password.matches(PASSWORD_REGEX);
     }
-
+    private boolean isValidePhone(String phone){
+        return phone.matches(PHONE_REGEX);
+    }
 }

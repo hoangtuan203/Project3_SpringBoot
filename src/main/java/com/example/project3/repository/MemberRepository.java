@@ -11,10 +11,8 @@ import java.util.List;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer>,CrudRepository<Member, Integer>{
     
-    
     Member findByMaTV(int maTV);
     Member findByEmail(String email);
-    
 
     boolean existsByMaTV(int maTV);
 }

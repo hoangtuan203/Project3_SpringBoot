@@ -16,41 +16,17 @@ class RegisterServiceImpl implements RegisterService {
         this.memberRepository = memberRepository;
     }
     @Override
-    public void saveMember(Member member) {
-        Member m = new Member();
-        m.setMaTV(member.getMaTV());
-        m.setEmail(member.getEmail());
-        m.setPassword(member.getPassword());
-        memberRepository.save(m);
-    }
+    public Member saveMember(Member member) {
+        if (!isMemberExit(member.getMaTV())) {
+            return memberRepository.save(member);
+        }
 
-    @Override
-    public Member findMemberByEmail(String email) {
-        return memberRepository.findByEmail(email);
-    }
-
-    @Override
-    public List<Member> findAllMembers() {
-        List<Member> members = memberRepository.findAll();
-        return members.stream().map((member) -> convertEntityToDto(member))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Member findMemberByMaTV(int maTV) {
         return null;
     }
 
     @Override
-    public boolean existsByMaTV(int maTV) {
-        return false;
+    public boolean isMemberExit(int maTV) {
+        return memberRepository.existsById(maTV);
     }
 
-    private Member convertEntityToDto(Member member) {
-        Member m = new Member();
-        member.setMaTV(m.getMaTV());
-        member.setEmail(m.getEmail());
-        member.setPassword(m.getPassword());
-        return member;
-    }
 }

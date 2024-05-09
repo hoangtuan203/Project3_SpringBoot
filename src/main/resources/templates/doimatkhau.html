@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Đổi Mật Khẩu</title>
+        <!-- CSS FILES -->        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="css/templatemo-topic-listing.css" rel="stylesheet">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .navbar {
+                background-color: #367d96;
+                color: white;
+            }
+            .container.mk {
+                max-width: 500px;
+                margin: auto;
+                padding-top: 60px;
+            }
+            form {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            form input {
+                margin-bottom: 15px;
+                padding: 10px;
+                width: 100%;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            button {
+                width: 100%;
+                padding: 12px;
+                border: none;
+                border-radius: 4px;
+                background-color: #007bff;
+                color: #ffffff;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .footer {
+                background-color: #343a40;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+            }
+            .navbar {
+                background-color: #367d96; /* Màu nền của header */
+                color: white; /* Màu chữ của header */
+            }
+
+            .navbar .navbar-toggler-icon {
+                color: white; /* Màu biểu tượng toggle */
+            }
+
+            .dropdown-menu a.dropdown-item:hover {
+                background-color: #367d96; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
+            }
+            .alert {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border: 1px solid transparent;
+                border-radius: 0.25rem;
+            }
+
+            .alert-success {
+                color: #155724;
+                background-color: #d4edda;
+                border-color: #c3e6cb;
+            }
+
+            .alert-danger {
+                color: #721c24;
+                background-color: #f8d7da;
+                border-color: #f5c6cb;
+            }
+
+            .alert-dismissible {
+                position: relative;
+                padding-right: 3.5rem;
+            }
+
+            .close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 0.75rem 1.25rem;
+                color: inherit;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+        <div>
+            <!-- Header -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi-back"></i>
+                        <span class="ms-2">MEMBER</span>
+                    </a>
+
+                    <!-- Button toggler for small screens -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Phần trái của thanh điều hướng -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto"></ul>
+                    </div>
+
+                    <!-- Phần phải của thanh điều hướng -->
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/doimatkhau?maTV=' + ${member.maTV}}">Đổi Mật Khẩu</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
+                                <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
+                                <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Form Đổi Mật Khẩu -->
+        <div class="container mk">
+            <h2 class="text-center mb-4">Đổi Mật Khẩu</h2>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong th:text="${error}"></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong th:text="${successMessage}"></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/reserPassword" method="POST">
+                <!-- Trường ẩn để chứa mã thành viên -->
+                <input type="hidden" id="maTV" name="maTV" th:value="${member.maTV}">
+
+                <div class="form-group">
+                    <label for="currentPassword">Mật khẩu hiện tại:</label>
+                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Mật khẩu mới:</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Xác nhận mật khẩu mới:</label>
+                    <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Đổi Mật Khẩu</button>
+            </form>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <p class="text-muted text-center mb-0">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a>
+                            2024</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- JavaScript và các script Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- JAVASCRIPT FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                // Đóng thông báo sau 5 giây
+                $(".alert").delay(5000).fadeOut("slow");
+            });
+        </script>
+
+
+
+    </body>
+</html>
