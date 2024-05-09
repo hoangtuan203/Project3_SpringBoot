@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean changePassword(int maTV, String currentPassword, String newPassword) {
-        Member member = memberRepository.findById(maTV);
+        Member member = memberRepository.findById(maTV).orElse(null);
 
         if (member != null && member.getPassword().equals(currentPassword)) {
             member.setPassword(newPassword);

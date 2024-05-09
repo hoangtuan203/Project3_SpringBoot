@@ -1,20 +1,30 @@
 package com.example.project3.models;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
 import java.util.Date;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 @Entity
 @Table(name = "thongtinsd")
 public class ThongTinSD {
+
     @Id
-    @Column(name="MaTT")
+    @Column(name = "MaTT")
     private int maTT;
-    @Column(name="MaTV")
-    private int maTV;
-    @Column(name="MaTB")
-    private int maTB;
+    @ManyToOne
+    @JoinColumn(name = "MaTV")
+    private Member thanhVien;
+    @JoinColumn(name = "MaTB")
+    public ThietBi thietBi;
     @Column(name = "TGVao")
     private Timestamp tgVao;
     @Column(name = "TGMuon")
@@ -24,22 +34,23 @@ public class ThongTinSD {
     @Column(name = "TGDatCho")
     private Timestamp tgDatCho;
 
-
-    public ThongTinSD(){
+    public ThongTinSD() {
 
     }
-    public ThongTinSD(int maTT, int maTV, int maTB, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
+
+    public ThongTinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
         this.maTT = maTT;
-        this.maTV = maTV;
-        this.maTB = maTB;
+        this.thanhVien = thanhVien;
+        this.thietBi = thietBi;
         this.tgVao = tgVao;
         this.tgMuon = tgMuon;
         this.tgTra = tgTra;
         this.tgDatCho = tgDatCho;
     }
-    public ThongTinSD(int maTT, int maTV, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
+
+    public ThongTinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
         this.maTT = maTT;
-        this.maTV = maTV;
+        this.thanhVien = thanhVien;
         this.tgVao = tgVao;
         this.tgMuon = tgMuon;
         this.tgTra = tgTra;
@@ -62,20 +73,24 @@ public class ThongTinSD {
         this.maTT = maTT;
     }
 
-    public int getMaTV() {
-        return maTV;
+    // Getter cho thanhVien
+    public Member getThanhVien() {
+        return thanhVien;
     }
 
-    public void setMaTV(int maTV) {
-        this.maTV = maTV;
+    // Setter cho thanhVien
+    public void setThanhVien(Member thanhVien) {
+        this.thanhVien = thanhVien;
     }
 
-    public int getMaTB() {
-        return maTB;
+    // Getter cho thietBi
+    public ThietBi getThietBi() {
+        return thietBi;
     }
 
-    public void setMaTB(int maTB) {
-        this.maTB = maTB;
+    // Setter cho thietBi
+    public void setThietBi(ThietBi thietBi) {
+        this.thietBi = thietBi;
     }
 
     public Date getTgVao() {

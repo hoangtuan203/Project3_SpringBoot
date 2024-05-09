@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.project3.models;
 
 import jakarta.persistence.Column;
@@ -10,19 +6,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
+import java.sql.Timestamp;
+import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Builder
 @Entity
 @Table(name = "thongtinsd")
-public class ThongtinSD implements Serializable {
+public class ThongTinSD {
 
     @Id
     @Column(name = "MaTT")
@@ -30,27 +23,22 @@ public class ThongtinSD implements Serializable {
     @ManyToOne
     @JoinColumn(name = "MaTV")
     private Member thanhVien;
-    @ManyToOne
     @JoinColumn(name = "MaTB")
-    public Thietbi thietBi;
-    @CreationTimestamp
+    public ThietBi thietBi;
     @Column(name = "TGVao")
-    private LocalDateTime tgVao;
-    @CreationTimestamp
+    private Timestamp tgVao;
     @Column(name = "TGMuon")
-    private LocalDateTime tgMuon;
-    @CreationTimestamp
+    private Timestamp tgMuon;
     @Column(name = "TGTra")
-    private LocalDateTime tgTra;
-    @CreationTimestamp
+    private Timestamp tgTra;
     @Column(name = "TGDatCho")
-    private LocalDateTime tgDatCho;
+    private Timestamp tgDatCho;
 
-    public ThongtinSD() {
+    public ThongTinSD() {
+
     }
 
-    public ThongtinSD(int maTT, Member thanhVien, Thietbi thietBi, LocalDateTime tgVao, LocalDateTime tgMuon,
-            LocalDateTime tgTra, LocalDateTime tgDatCho) {
+    public ThongTinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.thietBi = thietBi;
@@ -60,12 +48,27 @@ public class ThongtinSD implements Serializable {
         this.tgDatCho = tgDatCho;
     }
 
-    // Getter cho maTT
+    public ThongTinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
+        this.maTT = maTT;
+        this.thanhVien = thanhVien;
+        this.tgVao = tgVao;
+        this.tgMuon = tgMuon;
+        this.tgTra = tgTra;
+        this.tgDatCho = tgDatCho;
+    }
+
+    public Date getTgDatCho() {
+        return tgDatCho;
+    }
+
+    public void setTgDatCho(Timestamp tgDatCho) {
+        this.tgDatCho = tgDatCho;
+    }
+
     public int getMaTT() {
         return maTT;
     }
 
-    // Setter cho maTT
     public void setMaTT(int maTT) {
         this.maTT = maTT;
     }
@@ -81,52 +84,36 @@ public class ThongtinSD implements Serializable {
     }
 
     // Getter cho thietBi
-    public Thietbi getThietBi() {
+    public ThietBi getThietBi() {
         return thietBi;
     }
 
     // Setter cho thietBi
-    public void setThietBi(Thietbi thietBi) {
+    public void setThietBi(ThietBi thietBi) {
         this.thietBi = thietBi;
     }
 
-    // Getter cho tgVao
-    public LocalDateTime getTgVao() {
+    public Date getTgVao() {
         return tgVao;
     }
 
-    // Setter cho tgVao
-    public void setTgVao(LocalDateTime tgVao) {
+    public void setTgVao(Timestamp tgVao) {
         this.tgVao = tgVao;
     }
 
-    // Getter cho tgMuon
-    public LocalDateTime getTgMuon() {
+    public Date getTgMuon() {
         return tgMuon;
     }
 
-    // Setter cho tgMuon
-    public void setTgMuon(LocalDateTime tgMuon) {
+    public void setTgMuon(Timestamp tgMuon) {
         this.tgMuon = tgMuon;
     }
 
-    // Getter cho tgTra
-    public LocalDateTime getTgTra() {
+    public Date getTgTra() {
         return tgTra;
     }
 
-    // Setter cho tgTra
-    public void setTgTra(LocalDateTime tgTra) {
+    public void setTgTra(Timestamp tgTra) {
         this.tgTra = tgTra;
-    }
-
-    // Getter cho tgDatCho
-    public LocalDateTime getTgDatCho() {
-        return tgDatCho;
-    }
-
-    // Setter cho tgDatCho
-    public void setTgDatCho(LocalDateTime tgDatCho) {
-        this.tgDatCho = tgDatCho;
     }
 }

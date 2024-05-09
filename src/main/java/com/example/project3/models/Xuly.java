@@ -23,6 +23,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Table(name = "xuly")
 public class Xuly implements Serializable {
+
     @Id
     @Column(name = "MaXL")
     private Integer maXL;
