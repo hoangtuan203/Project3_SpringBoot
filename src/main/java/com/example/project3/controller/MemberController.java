@@ -60,10 +60,10 @@ public class MemberController {
         return new String();
     }
     
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String login(Model model) {
+//        return "login";
+//    }
     @PostMapping("/index")
     public String datCho(@RequestParam String ngay, @RequestParam String gio, @RequestParam String idMember,@RequestParam  String maTBHiden,RedirectAttributes redirectAttributes) throws ParseException {
         String dateString = ngay+" "+gio; 
