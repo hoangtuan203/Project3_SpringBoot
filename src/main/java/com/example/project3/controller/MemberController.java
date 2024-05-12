@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.project3.models.Member;
+import com.example.project3.models.ThietBi;
 import com.example.project3.models.Xuly;
 import com.example.project3.repository.MemberRepository;
 import com.example.project3.repository.ThietBiRepository;
