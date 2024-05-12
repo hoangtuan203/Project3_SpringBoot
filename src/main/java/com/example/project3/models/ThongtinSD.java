@@ -1,50 +1,50 @@
 package com.example.project3.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Builder
 @Entity
 @Table(name = "thongtinsd")
-public class ThongTinSD implements Serializable {
+public class ThongtinSD implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTT")
     private int maTT;
+
     @ManyToOne
     @JoinColumn(name = "MaTV")
     private Member thanhVien;
+
     @ManyToOne
     @JoinColumn(name = "MaTB")
-    public ThietBi thietBi;
+    private ThietBi thietBi;
+
     @Column(name = "TGVao")
     private Timestamp tgVao;
+
     @Column(name = "TGMuon")
     private Timestamp tgMuon;
+
     @Column(name = "TGTra")
     private Timestamp tgTra;
+
     @Column(name = "TGDatCho")
     private Timestamp tgDatCho;
 
-    public ThongTinSD() {
+    public ThongtinSD() {
 
     }
 
-    public ThongTinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
-            Timestamp tgDatCho) {
+    public ThongtinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
+                      Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.thietBi = thietBi;
@@ -54,8 +54,8 @@ public class ThongTinSD implements Serializable {
         this.tgDatCho = tgDatCho;
     }
 
-    public ThongTinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
-            Timestamp tgDatCho) {
+    public ThongtinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
+                      Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.tgVao = tgVao;

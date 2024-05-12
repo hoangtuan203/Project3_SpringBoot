@@ -5,7 +5,7 @@
 package com.example.project3.repository;
 
 import com.example.project3.models.Member;
-import com.example.project3.models.ThongTinSD;
+import com.example.project3.models.ThongtinSD;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Lenovo
  */
 @Repository
-public interface ThongTinSDRepository extends JpaRepository<ThongTinSD, Integer> {
+public interface ThongTinSDRepository extends JpaRepository<ThongtinSD, Integer> {
 
-    List<ThongTinSD> findByThanhVien(Member thanhVien);
+    List<ThongtinSD> findByThanhVien(Member thanhVien);
 }

@@ -3,13 +3,11 @@ import java.util.Date;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.project3.models.Member;
-import com.example.project3.models.ThietBi;
 import com.example.project3.models.Xuly;
 import com.example.project3.repository.MemberRepository;
 import com.example.project3.repository.ThietBiRepository;
@@ -17,18 +15,15 @@ import com.example.project3.repository.ThongTinSDRepository;
 import com.example.project3.repository.XuLyRepository;
 import com.example.project3.service.EmailService;
 import com.example.project3.service.MemberService;
-import com.example.project3.models.ThongTinSD;
-import java.security.SecureRandom;
+import com.example.project3.models.ThongtinSD;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
 @Controller
 public class MemberController {
@@ -71,7 +66,7 @@ public class MemberController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(dateString); // Chuyển đổi chuỗi sang đối tượng Date
         Timestamp timestamp = new Timestamp(date.getTime()); // Chuyển đổi đối tượng Date sang Timestamp
-        ThongTinSD ttsd = new ThongTinSD();
+        ThongtinSD ttsd = new ThongtinSD();
         int maTTSD = Integer.parseInt(generateRandomKey());
         ttsd.setMaTT(maTTSD);
 //        ttsd.setMaTB(Integer.parseInt(maTBHiden));
@@ -206,7 +201,7 @@ public class MemberController {
                 tv.setMaTV(maTVInt);
                 Member tv3 = memBerRepository.findById(maTVInt).orElse(null);;
 
-                List<ThongTinSD> userList = thongTinSDRepository.findByThanhVien(tv);
+                List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 if (!userList.isEmpty()) {
                     model.addAttribute("thongTinList", userList);
                     model.addAttribute("member", tv3);
@@ -232,7 +227,7 @@ public class MemberController {
                 tv.setMaTV(maTVInt);
                 Member tv3 = memBerRepository.findById(maTVInt).orElse(null);;
 
-                List<ThongTinSD> userList = thongTinSDRepository.findByThanhVien(tv);
+                List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 if (!userList.isEmpty()) {
                     model.addAttribute("thongTinList", userList);
                     model.addAttribute("member", tv3);

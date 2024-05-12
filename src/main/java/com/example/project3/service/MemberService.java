@@ -2,7 +2,7 @@ package com.example.project3.service;
 
 import com.example.project3.models.Member;
 import com.example.project3.models.ThietBi;
-import com.example.project3.models.ThongTinSD;
+import com.example.project3.models.ThongtinSD;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public interface MemberService {
   
     List<ThietBi> getAllThietBiDangRanh();
   
-    ThongTinSD insert(ThongTinSD thongTinSD);
+    ThongtinSD insert(ThongtinSD thongTinSD);
   
     boolean changePassword(int maTV, String currentPassword, String newPassword);
 }

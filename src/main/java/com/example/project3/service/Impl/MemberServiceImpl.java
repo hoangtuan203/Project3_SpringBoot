@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.project3.models.Member;
 import com.example.project3.models.ThietBi;
-import com.example.project3.models.ThongTinSD;
+import com.example.project3.models.ThongtinSD;
 import com.example.project3.repository.MemberRepository;
 import com.example.project3.repository.TBRepository;
 import com.example.project3.repository.TTSDRepository;
@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
         return thietbiRepository.findAllThietBiDangRanh();
     }
     @Override
-    public ThongTinSD insert(ThongTinSD thongTinSD) {
+    public ThongtinSD insert(ThongtinSD thongTinSD) {
         return ttsdRepository.save(thongTinSD);
     }
     @Override

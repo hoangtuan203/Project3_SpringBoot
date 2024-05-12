@@ -1,9 +1,7 @@
 package com.example.project3.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +16,13 @@ import lombok.NoArgsConstructor;
 public class ThietBi implements Serializable{
 
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "MaTB")
     private int maTB;
+
     @Column(name = "TenTB")
     private String tenTB;
+
     @Column(name = "MoTaTB")
     private String moTaTB;
 
