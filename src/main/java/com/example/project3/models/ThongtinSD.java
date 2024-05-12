@@ -11,12 +11,15 @@ import java.sql.Timestamp;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Builder
 @Entity
 @Table(name = "thongtinsd")
-public class ThongTinSD implements Serializable{
+public class ThongTinSD implements Serializable {
 
     @Id
     @Column(name = "MaTT")
@@ -24,6 +27,7 @@ public class ThongTinSD implements Serializable{
     @ManyToOne
     @JoinColumn(name = "MaTV")
     private Member thanhVien;
+    @ManyToOne
     @JoinColumn(name = "MaTB")
     public ThietBi thietBi;
     @Column(name = "TGVao")
