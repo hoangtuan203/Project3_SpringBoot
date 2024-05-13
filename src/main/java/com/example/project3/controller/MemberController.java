@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.project3.models.Member;
+import com.example.project3.models.ThietBi;
 import com.example.project3.models.Xuly;
 import com.example.project3.repository.MemberRepository;
 import com.example.project3.repository.ThietBiRepository;
@@ -68,15 +69,20 @@ public class MemberController {
         Timestamp timestamp = new Timestamp(date.getTime()); // Chuyển đổi đối tượng Date sang Timestamp
         ThongtinSD ttsd = new ThongtinSD();
         int maTTSD = Integer.parseInt(generateRandomKey());
-        ttsd.setMaTT(maTTSD);
+        System.out.println(maTTSD);
+        ttsd.setMaTT(12311111);
 //        ttsd.setMaTB(Integer.parseInt(maTBHiden));
 //        ttsd.setMaTV(Integer.parseInt(idMember));
         ttsd.setTgDatCho(timestamp);
-        memberService.insert(ttsd);
+        
         int mtv =Integer.parseInt(idMember);
-        System.out.println(mtv);
+        int maTB =Integer.parseInt(maTBHiden);
+        // System.out.println(mtv);
         Member member = memberService.getMemberById(mtv);
-
+        ThietBi thietBi = memberService.getThietBiById(maTB);
+        ttsd.setThietBi(thietBi);
+        ttsd.setThanhVien(member);
+        memberService.insert(ttsd);
         // model.addAttribute("member", member);
         // System.out.println(member.getTenTV());
         redirectAttributes.addFlashAttribute("member", member);

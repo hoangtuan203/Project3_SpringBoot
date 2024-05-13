@@ -20,7 +20,7 @@ public interface MemberService {
     List<ThietBi> getAllThietBi();
   
     List<ThietBi> getAllThietBiDangRanh();
-  
+    ThietBi getThietBiById(int maTB);
     ThongtinSD insert(ThongtinSD thongTinSD);
   
     boolean changePassword(int maTV, String currentPassword, String newPassword);

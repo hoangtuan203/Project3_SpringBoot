@@ -60,6 +60,11 @@ public class MemberServiceImpl implements MemberService {
         return member;
     }
     @Override
+    public ThietBi getThietBiById(int maTB) {
+        
+        return thietbiRepository.findByMaTB(maTB);
+    }
+    @Override
     public Member getPasswordByMaTV(int maTV) {
         return memberRepository.findByMaTV(maTV);
     }
