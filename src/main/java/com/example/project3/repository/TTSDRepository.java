@@ -7,5 +7,6 @@ import com.example.project3.models.ThongtinSD;
 
 @Repository
 public interface TTSDRepository extends JpaRepository<ThongtinSD,Integer>,CrudRepository<ThongtinSD, Integer> {
-    ThongtinSD save(ThongtinSD thongTinSD);
+    @SuppressWarnings("unchecked")
+    ThongtinSD save(ThongtinSD thongtinSD);
 }

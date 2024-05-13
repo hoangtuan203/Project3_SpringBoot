@@ -29,8 +29,8 @@ import org.springframework.ui.Model;
 @Controller
 public class MemberController {
 
-    private static final String CHARACTERS = "0123456789";
-    private static final int KEY_LENGTH = 8;
+    // private static final String CHARACTERS = "0123456789";
+    // private static final int KEY_LENGTH = 8;
 
     private MemberService memberService;
     @Autowired
@@ -68,9 +68,9 @@ public class MemberController {
         Date date = sdf.parse(dateString); // Chuyển đổi chuỗi sang đối tượng Date
         Timestamp timestamp = new Timestamp(date.getTime()); // Chuyển đổi đối tượng Date sang Timestamp
         ThongtinSD ttsd = new ThongtinSD();
-        int maTTSD = Integer.parseInt(generateRandomKey());
-        System.out.println(maTTSD);
-        ttsd.setMaTT(12311111);
+        // int maTTSD = Integer.parseInt(generateRandomKey());
+        // System.out.println(maTTSD);
+        // ttsd.setMaTT(maTTSD);
 //        ttsd.setMaTB(Integer.parseInt(maTBHiden));
 //        ttsd.setMaTV(Integer.parseInt(idMember));
         ttsd.setTgDatCho(timestamp);
@@ -82,6 +82,9 @@ public class MemberController {
         ThietBi thietBi = memberService.getThietBiById(maTB);
         ttsd.setThietBi(thietBi);
         ttsd.setThanhVien(member);
+        System.out.println("ma TT:"+ ttsd.getMaTT());
+        System.out.println("thiet bi:"+ ttsd.getThietBi().getTenTB());
+        System.out.println("thanh vien:"+ ttsd.getThanhVien().getTenTV());
         memberService.insert(ttsd);
         // model.addAttribute("member", member);
         // System.out.println(member.getTenTV());
@@ -89,19 +92,19 @@ public class MemberController {
         return "redirect:/index";
         
     }   
-    public  String generateRandomKey() {
-        SecureRandom secureRandom = new SecureRandom();
-        StringBuilder stringBuilder = new StringBuilder(KEY_LENGTH);
+    // public  String generateRandomKey() {
+    //     SecureRandom secureRandom = new SecureRandom();
+    //     StringBuilder stringBuilder = new StringBuilder(KEY_LENGTH);
 
-        for (int i = 0; i < KEY_LENGTH; i++) {
-            int randomIndex = secureRandom.nextInt(CHARACTERS.length());
-            char randomChar = CHARACTERS.charAt(randomIndex);
-            stringBuilder.append(randomChar);
-        }
+    //     for (int i = 0; i < KEY_LENGTH; i++) {
+    //         int randomIndex = secureRandom.nextInt(CHARACTERS.length());
+    //         char randomChar = CHARACTERS.charAt(randomIndex);
+    //         stringBuilder.append(randomChar);
+    //     }
 
-        return stringBuilder.toString();
+    //     return stringBuilder.toString();
 
-    }
+    // }
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
 
