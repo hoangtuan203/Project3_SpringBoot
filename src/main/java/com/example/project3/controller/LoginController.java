@@ -27,12 +27,11 @@ public class LoginController {
     public String loginMember(@RequestParam int maTV, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
         Member member = memberService.loginMember(maTV, password);
         if (member != null) {
-            // Lưu maTV vào session sau khi đăng nhập thành công
             session.setAttribute("loggedInMaTV", maTV);
             redirectAttributes.addFlashAttribute("member", member);
             return "redirect:/index";
         } else {
-            return "redirect:/login?error"; // Chuyển hướng đến trang đăng nhập và hiển thị thông báo lỗi
+            return "redirect:/login?error"; 
         }
     }
 
