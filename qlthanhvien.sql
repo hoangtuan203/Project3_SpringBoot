@@ -34,7 +34,7 @@ CREATE TABLE `thanhvien` (
   `Nganh` varchar(100) DEFAULT NULL,
   `SDT` varchar(15) DEFAULT NULL,
   `Email` varchar(25) DEFAULT NULL,
-  `Password` varchar(10) NOT NULL
+  `Password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
