@@ -61,10 +61,6 @@ public class MemberController {
         return new String();
     }
 
-//    @GetMapping("/login")
-//    public String login(Model model) {
-//        return "login";
-//    }
     @PostMapping("/index")
     public String datCho(@RequestParam String ngay, @RequestParam String gio, @RequestParam String idMember, @RequestParam String maTBHiden, RedirectAttributes redirectAttributes) throws ParseException {
         String dateString = ngay + " " + gio;
@@ -72,9 +68,9 @@ public class MemberController {
         Date date = sdf.parse(dateString); // Chuyển đổi chuỗi sang đối tượng Date
         Timestamp timestamp = new Timestamp(date.getTime()); // Chuyển đổi đối tượng Date sang Timestamp
         ThongtinSD ttsd = new ThongtinSD();
-        // int maTTSD = Integer.parseInt(generateRandomKey());
-        // System.out.println(maTTSD);
-        // ttsd.setMaTT(maTTSD);
+//        int maTTSD = Integer.parseInt(generateRandomKey());
+//        System.out.println(maTTSD);
+//        ttsd.setMaTT(maTTSD);
 //        ttsd.setMaTB(Integer.parseInt(maTBHiden));
 //        ttsd.setMaTV(Integer.parseInt(idMember));
         ttsd.setTgDatCho(timestamp);
@@ -96,6 +92,7 @@ public class MemberController {
         return "redirect:/index";
 
     }
+    
     // public  String generateRandomKey() {
     //     SecureRandom secureRandom = new SecureRandom();
     //     StringBuilder stringBuilder = new StringBuilder(KEY_LENGTH);
@@ -107,6 +104,7 @@ public class MemberController {
     //     }
     //     return stringBuilder.toString();
     // }
+    
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
 
@@ -165,7 +163,7 @@ public class MemberController {
         return "doimatkhau";
     }
 
-//    
+  
     @GetMapping("/hosothanhvien")
     public String showProfile(Model model, @RequestParam("maTV") int maTV) {
         Member tv = memBerRepository.findById(maTV).orElse(null);;
@@ -215,7 +213,6 @@ public class MemberController {
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 LocalDateTime currentTime = LocalDateTime.now();
 
-                // Lọc danh sách để chỉ chứa các bản ghi có TGMuon không null, TGTra không null, và thời gian hiện tại nằm trong khoảng thời gian mượn và trả
                 List<ThongtinSD> filteredUserList = userList.stream()
                         .filter(thongtinSD -> thongtinSD.getTgMuon() != null && thongtinSD.getTgTra() != null && currentTime.isBefore(thongtinSD.getTgTra().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()))
                         .collect(Collectors.toList());
@@ -248,7 +245,6 @@ public class MemberController {
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
                 LocalDateTime currentTime = LocalDateTime.now();
 
-                // Lọc danh sách để chỉ chứa các bản ghi có TGDatCho không null
                 List<ThongtinSD> filteredUserList = userList.stream()
                         .filter(ThongtinSD -> ThongtinSD.getTgDatCho() != null)
                         .collect(Collectors.toList());
@@ -274,8 +270,6 @@ public class MemberController {
     public String submitForm(@RequestParam String matv, Model model) {
         // Kiểm tra email có hợp lệ không
         if (isValidmaTV(matv)) {
-            // model.addAttribute("message", matv);
-
             int ma = Integer.parseInt(matv);
             if (memberService.getPasswordByMaTV(ma) != null) {
                 // gửi maillllll
@@ -289,11 +283,8 @@ public class MemberController {
                         "bạn nhập sai mã thành viên");
             }
         } else {
-            // Nếu không hợp lệ, truyền thông báo lỗi vào model để hiển thị
-            model.addAttribute("message",
-                    matv);
+            model.addAttribute("message", matv);
         }
-        // Trả về tên của trang HTML hiện tại
         return "forgotPassword";
     }
 
