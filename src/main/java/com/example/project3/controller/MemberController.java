@@ -21,6 +21,9 @@ import com.example.project3.models.ThongtinSD;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -210,9 +213,11 @@ public class MemberController {
 
             if (tv3 != null) {
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
-                // Lọc danh sách để chỉ chứa các bản ghi có TGMuon và TGTra không null
+                LocalDateTime currentTime = LocalDateTime.now();
+
+                // Lọc danh sách để chỉ chứa các bản ghi có TGMuon không null, TGTra không null, và thời gian hiện tại nằm trong khoảng thời gian mượn và trả
                 List<ThongtinSD> filteredUserList = userList.stream()
-                        .filter(ThongtinSD -> ThongtinSD.getTgMuon() != null && ThongtinSD.getTgTra() != null)
+                        .filter(thongtinSD -> thongtinSD.getTgMuon() != null && thongtinSD.getTgTra() != null && currentTime.isBefore(thongtinSD.getTgTra().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()))
                         .collect(Collectors.toList());
 
                 if (!filteredUserList.isEmpty()) {
@@ -223,7 +228,6 @@ public class MemberController {
                 return "thietbidangmuon";
             } else {
                 model.addAttribute("member", tv3);
-
                 return "thietbidangmuon";
             }
         } catch (NumberFormatException e) {
@@ -242,9 +246,11 @@ public class MemberController {
 
             if (tv3 != null) {
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
+                LocalDateTime currentTime = LocalDateTime.now();
+
                 // Lọc danh sách để chỉ chứa các bản ghi có TGDatCho không null
                 List<ThongtinSD> filteredUserList = userList.stream()
-                        .filter(ThongtinSD -> ThongtinSD.getTgDatCho() != null )
+                        .filter(ThongtinSD -> ThongtinSD.getTgDatCho() != null)
                         .collect(Collectors.toList());
 
                 if (!filteredUserList.isEmpty()) {
