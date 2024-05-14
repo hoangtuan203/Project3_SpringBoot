@@ -191,7 +191,6 @@ public class MemberController {
                 model.addAttribute("member", tv2);
                 return "trangthaivipham";
             } else {
-                model.addAttribute("errorMessage", "Không tìm thấy thông tin xử lý cho thành viên có mã " + maTV);
                 model.addAttribute("member", tv2);
                 return "trangthaivipham";
             }
@@ -268,11 +267,10 @@ public class MemberController {
 
     @PostMapping("/submit-form")
     public String submitForm(@RequestParam String matv, Model model) {
-        // Kiểm tra email có hợp lệ không
         if (isValidmaTV(matv)) {
             int ma = Integer.parseInt(matv);
             if (memberService.getPasswordByMaTV(ma) != null) {
-                // gửi maillllll
+                
                 emailService.sendSimpleMessage(memberService.getPasswordByMaTV(ma).getEmail(),
                         "Cấp lại password",
                         "Password của " + ma + " là " + memberService.getPasswordByMaTV(ma).getPassword());
@@ -288,11 +286,7 @@ public class MemberController {
         return "forgotPassword";
     }
 
-    // Phương thức để kiểm tra email có đúng định dạng hay không
     private boolean isValidmaTV(String ma) {
-        // Kiểm tra xem số điện thoại có 10 số không
         return ma != null && ma.matches("^\\d{10}$");
     }
-
-//   
 }
