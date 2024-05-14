@@ -1,4 +1,5 @@
 package com.example.project3.controller;
+
 import java.util.Date;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ import com.example.project3.models.ThongtinSD;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,6 @@ public class MemberController {
 
     // private static final String CHARACTERS = "0123456789";
     // private static final int KEY_LENGTH = 8;
-
     private MemberService memberService;
     @Autowired
     private EmailService emailService;
@@ -56,14 +57,14 @@ public class MemberController {
     public String getMethodName(@RequestParam String param) {
         return new String();
     }
-    
+
 //    @GetMapping("/login")
 //    public String login(Model model) {
 //        return "login";
 //    }
     @PostMapping("/index")
-    public String datCho(@RequestParam String ngay, @RequestParam String gio, @RequestParam String idMember,@RequestParam  String maTBHiden,RedirectAttributes redirectAttributes) throws ParseException {
-        String dateString = ngay+" "+gio; 
+    public String datCho(@RequestParam String ngay, @RequestParam String gio, @RequestParam String idMember, @RequestParam String maTBHiden, RedirectAttributes redirectAttributes) throws ParseException {
+        String dateString = ngay + " " + gio;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(dateString); // Chuyển đổi chuỗi sang đối tượng Date
         Timestamp timestamp = new Timestamp(date.getTime()); // Chuyển đổi đối tượng Date sang Timestamp
@@ -74,24 +75,24 @@ public class MemberController {
 //        ttsd.setMaTB(Integer.parseInt(maTBHiden));
 //        ttsd.setMaTV(Integer.parseInt(idMember));
         ttsd.setTgDatCho(timestamp);
-        
-        int mtv =Integer.parseInt(idMember);
-        int maTB =Integer.parseInt(maTBHiden);
+
+        int mtv = Integer.parseInt(idMember);
+        int maTB = Integer.parseInt(maTBHiden);
         // System.out.println(mtv);
         Member member = memberService.getMemberById(mtv);
         ThietBi thietBi = memberService.getThietBiById(maTB);
         ttsd.setThietBi(thietBi);
         ttsd.setThanhVien(member);
-        System.out.println("ma TT:"+ ttsd.getMaTT());
-        System.out.println("thiet bi:"+ ttsd.getThietBi().getTenTB());
-        System.out.println("thanh vien:"+ ttsd.getThanhVien().getTenTV());
+        System.out.println("ma TT:" + ttsd.getMaTT());
+        System.out.println("thiet bi:" + ttsd.getThietBi().getTenTB());
+        System.out.println("thanh vien:" + ttsd.getThanhVien().getTenTV());
         memberService.insert(ttsd);
         // model.addAttribute("member", member);
         // System.out.println(member.getTenTV());
         redirectAttributes.addFlashAttribute("member", member);
         return "redirect:/index";
-        
-    }   
+
+    }
     // public  String generateRandomKey() {
     //     SecureRandom secureRandom = new SecureRandom();
     //     StringBuilder stringBuilder = new StringBuilder(KEY_LENGTH);
@@ -101,9 +102,7 @@ public class MemberController {
     //         char randomChar = CHARACTERS.charAt(randomIndex);
     //         stringBuilder.append(randomChar);
     //     }
-
     //     return stringBuilder.toString();
-
     // }
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
@@ -149,7 +148,7 @@ public class MemberController {
                 model.addAttribute("member", tv2);
                 model.addAttribute("successMessage", "Thay đổi mật khẩu thành công.");
 
-                return "doimatkhau"; 
+                return "doimatkhau";
             } else {
                 Member tv3 = memBerRepository.findById(maTV).orElse(null);;
                 model.addAttribute("member", tv3);
@@ -203,52 +202,64 @@ public class MemberController {
 
     @GetMapping("/thietbidangmuon")
     public String tbdangmuonpage(Model model, @RequestParam("maTV") String maTV) {
-        if (maTV != null && !maTV.isEmpty()) {
-            try {
-                int maTVInt = Integer.parseInt(maTV);
-                Member tv = new Member();
-                tv.setMaTV(maTVInt);
-                Member tv3 = memBerRepository.findById(maTVInt).orElse(null);;
+        try {
+            int maTVInt = Integer.parseInt(maTV);
+            Member tv = new Member();
+            tv.setMaTV(maTVInt);
+            Member tv3 = memBerRepository.findById(maTVInt).orElse(null);
 
+            if (tv3 != null) {
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
-                if (!userList.isEmpty()) {
-                    model.addAttribute("thongTinList", userList);
-                    model.addAttribute("member", tv3);
+                // Lọc danh sách để chỉ chứa các bản ghi có TGMuon và TGTra không null
+                List<ThongtinSD> filteredUserList = userList.stream()
+                        .filter(ThongtinSD -> ThongtinSD.getTgMuon() != null && ThongtinSD.getTgTra() != null)
+                        .collect(Collectors.toList());
 
-                    return "thietbidangmuon";
-                } else {
-                    model.addAttribute("member", tv3);
-                    return "thietbidangmuon";
+                if (!filteredUserList.isEmpty()) {
+                    model.addAttribute("thongTinList", filteredUserList);
                 }
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid maTV format: " + maTV);
+                model.addAttribute("member", tv3);
+
+                return "thietbidangmuon";
+            } else {
+                model.addAttribute("member", tv3);
+
+                return "thietbidangmuon";
             }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid maTV format: " + maTV);
         }
         return "thietbidangmuon";
     }
 
     @GetMapping("/datchothietbi")
     public String datchotbpage(Model model, @RequestParam("maTV") String maTV) {
-        if (maTV != null && !maTV.isEmpty()) {
-            try {
-                int maTVInt = Integer.parseInt(maTV);
-                Member tv = new Member();
-                tv.setMaTV(maTVInt);
-                Member tv3 = memBerRepository.findById(maTVInt).orElse(null);;
+        try {
+            int maTVInt = Integer.parseInt(maTV);
+            Member tv = new Member();
+            tv.setMaTV(maTVInt);
+            Member tv3 = memBerRepository.findById(maTVInt).orElse(null);
 
+            if (tv3 != null) {
                 List<ThongtinSD> userList = thongTinSDRepository.findByThanhVien(tv);
-                if (!userList.isEmpty()) {
-                    model.addAttribute("thongTinList", userList);
-                    model.addAttribute("member", tv3);
+                // Lọc danh sách để chỉ chứa các bản ghi có TGDatCho không null
+                List<ThongtinSD> filteredUserList = userList.stream()
+                        .filter(ThongtinSD -> ThongtinSD.getTgDatCho() != null )
+                        .collect(Collectors.toList());
 
-                    return "datchothietbi";
-                } else {
-                    model.addAttribute("member", tv3);
-                    return "datchothietbi";
+                if (!filteredUserList.isEmpty()) {
+                    model.addAttribute("thongTinList", filteredUserList);
                 }
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid maTV format: " + maTV);
+                model.addAttribute("member", tv3);
+
+                return "datchothietbi";
+            } else {
+                model.addAttribute("member", tv3);
+
+                return "datchothietbi";
             }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid maTV format: " + maTV);
         }
         return "datchothietbi";
     }
