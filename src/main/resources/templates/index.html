@@ -101,6 +101,25 @@
             .popup-close:hover {
                 color: #f00; 
             }
+            .list-rem {
+                position: absolute;
+                display: none;
+                top: calc(100% + 8px);
+                left: 0;
+                background-color: #ccc;
+                box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+                width: 300px;
+                height: auto;
+            }
+            .item-rem {
+                margin: 4px 0;
+                padding-left: 12px;
+                border-bottom: 1px solid #43a9de;
+                cursor: pointer;
+            }
+            .item-rem:last-child {
+                border-bottom: none;
+            }
         </style>
     </head>
 
@@ -146,7 +165,8 @@
         <div class="container mt-4">
             <h4 class="mb-4">QUẢN LÝ ĐẶT CHỖ </h4>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                <input type="text" oninput="search(2)" class="form-control" placeholder="Tìm kiếm...">
+                <div class="list-rem"></div>
                 <button class="btn btn-primary ml-2" type="button" onclick="search()"><i class="bi bi-search"></i></button>
             </div>
         
