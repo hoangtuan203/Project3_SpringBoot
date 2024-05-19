@@ -1,142 +1,143 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Hồ sơ</title>
-    <!-- CSS FILES -->        
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/templatemo-topic-listing.css" rel="stylesheet">
-    <style>
-        .navbar {
-            background-color: #367d96; /* Màu nền của header */
-            color: white; /* Màu chữ của header */
-        }
-        .navbar .navbar-toggler-icon {
-            color: white; /* Màu biểu tượng toggle */
-        }
-        .dropdown-menu a.dropdown-item:hover {
-            background-color: #367d96; /* Màu nền khi hover */
-            color: white; /* Màu chữ khi hover */
-        }
-        .footer {
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .profile-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .profile-item {
-            margin-bottom: 15px;
-        }
-        .profile-item label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        .profile-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <!-- Header -->
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <i class="bi-back"></i>
-                    <span class="ms-2">MEMBER</span>
-                </a>
-                <!-- Button toggler for small screens -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Phần trái của thanh điều hướng -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto"></ul>
-                </div>
-                <!-- Phần phải của thanh điều hướng -->
-                <div class="d-flex align-items-center">
-                    <div class="dropdown">
-                        <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
-                            <li><a class="dropdown-item" th:href="@{'/doimatkhau?maTV=' + ${member.maTV}}">Đổi Mật Khẩu</a></li>
-                            <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
-                            <li><a class="dropdown-item" th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
-                            <li><a class="dropdown-item" th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
-                            <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
-                        </ul>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Hồ sơ</title>
+        <!-- CSS FILES -->        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
+        <link href="css/templatemo-topic-listing.css" rel="stylesheet">
+        <style>
+            .navbar {
+                background-color: #367d96; /* Màu nền của header */
+                color: white; /* Màu chữ của header */
+            }
+            .navbar .navbar-toggler-icon {
+                color: white; /* Màu biểu tượng toggle */
+            }
+            .dropdown-menu a.dropdown-item:hover {
+                background-color: #367d96; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
+            }
+            .footer {
+                background-color: #343a40;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+            }
+            .profile-container {
+                max-width: 600px;
+                margin: 50px auto;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                background-color: #f9f9f9;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .profile-item {
+                margin-bottom: 15px;
+            }
+            .profile-item label {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .profile-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <!-- Header -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi-back"></i>
+                        <span class="ms-2">MEMBER</span>
+                    </a>
+                    <!-- Button toggler for small screens -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Phần trái của thanh điều hướng -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto"></ul>
+                    </div>
+                    <!-- Phần phải của thanh điều hướng -->
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <a href="#" class="navbar-icon bi-person smoothscroll me-4" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" th:href="@{'/quanlydatcho?maTV=' + ${member.maTV}}">Quản lý đặt chỗ</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/hosothanhvien?maTV=' + ${member.maTV}}">Hồ sơ thành viên</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/doimatkhau?maTV=' + ${member.maTV}}">Đổi Mật Khẩu</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/trangthaivipham?maTV=' + ${member.maTV}}">Trạng thái vi phạm</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/datchothietbi?maTV=' + ${member.maTV}}">Đặt chỗ thiết bị</a></li>
+                                <li><a class="dropdown-item" th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
+                                <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </div>
-    <div class="main-panel">
-        <div class="content-wrapper">
-            <div class="container">
-                <div class="profile-container bg-white p-4">
-                    <h2 class="profile-header">Hồ sơ</h2>
-                    <div class="profile-item">
-                        <label>Mã thành viên:</label>
-                        <span th:text="${thanhVien.maTV}"></span>
-                    </div>
-                    <div class="profile-item">
-                        <label>Họ tên:</label>
-                        <span th:text="${thanhVien.tenTV}"></span>
-                    </div>
-                    <div class="profile-item">
-                        <label>Khoa:</label>
-                        <span th:text="${thanhVien.khoa}"></span>
-                    </div>
-                    <div class="profile-item">
-                        <label>Ngành:</label>
-                        <span th:text="${thanhVien.nganh}"></span>
-                    </div>
-                    <div class="profile-item">
-                        <label>Số điện thoại:</label>
-                        <span th:text="${thanhVien.sdt}"></span>
-                    </div>
-                    <div class="profile-item">
-                        <label>Email:</label>
-                        <span th:text="${thanhVien.email}"></span>
-                    </div>
-                </div>
-            </div>
+            </nav>
         </div>
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <p class="text-muted text-center mb-0">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2024</p>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="container">
+                    <div class="profile-container bg-white p-4">
+                        <h2 class="profile-header">Hồ sơ</h2>
+                        <div class="profile-item">
+                            <label>Mã thành viên:</label>
+                            <span th:text="${thanhVien.maTV}"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>Họ tên:</label>
+                            <span th:text="${thanhVien.tenTV}"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>Khoa:</label>
+                            <span th:text="${thanhVien.khoa}"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>Ngành:</label>
+                            <span th:text="${thanhVien.nganh}"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>Số điện thoại:</label>
+                            <span th:text="${thanhVien.sdt}"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>Email:</label>
+                            <span th:text="${thanhVien.email}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </footer>
-    </div>
-    <!-- JAVASCRIPT FILES -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/click-scroll.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-muted text-center mb-0">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- JAVASCRIPT FILES -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
 </html>

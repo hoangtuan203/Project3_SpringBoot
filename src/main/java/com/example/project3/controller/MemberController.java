@@ -92,11 +92,10 @@ public class MemberController {
         return "redirect:/index";
 
     }
-    
+
     // public  String generateRandomKey() {
     //     SecureRandom secureRandom = new SecureRandom();
     //     StringBuilder stringBuilder = new StringBuilder(KEY_LENGTH);
-
     //     for (int i = 0; i < KEY_LENGTH; i++) {
     //         int randomIndex = secureRandom.nextInt(CHARACTERS.length());
     //         char randomChar = CHARACTERS.charAt(randomIndex);
@@ -104,7 +103,6 @@ public class MemberController {
     //     }
     //     return stringBuilder.toString();
     // }
-    
     @GetMapping("/loginSuccessful")
     public String loginSuccessful(Model model) {
 
@@ -115,6 +113,19 @@ public class MemberController {
     @GetMapping("/forgotPassword")
     public String showForm() {
         return "forgotPassword";
+    }
+
+    @GetMapping("/quanlydatcho")
+    public String indexAfterLogin(Model model, @RequestParam("maTV") String maTV) {
+        List<ThietBi> listTB = memberService.getAllThietBiDangRanh();
+
+        int maThanhVien = Integer.parseInt(maTV);
+
+        Member memBer = memBerRepository.findById(maThanhVien).orElse(null);
+        model.addAttribute("listTB", listTB);
+        model.addAttribute("member", memBer);
+
+        return "index";
     }
 
     @GetMapping("/doimatkhau")
@@ -163,7 +174,6 @@ public class MemberController {
         return "doimatkhau";
     }
 
-  
     @GetMapping("/hosothanhvien")
     public String showProfile(Model model, @RequestParam("maTV") int maTV) {
         Member tv = memBerRepository.findById(maTV).orElse(null);;
@@ -270,7 +280,7 @@ public class MemberController {
         if (isValidmaTV(matv)) {
             int ma = Integer.parseInt(matv);
             if (memberService.getPasswordByMaTV(ma) != null) {
-                
+
                 emailService.sendSimpleMessage(memberService.getPasswordByMaTV(ma).getEmail(),
                         "Cấp lại password",
                         "Password của " + ma + " là " + memberService.getPasswordByMaTV(ma).getPassword());
