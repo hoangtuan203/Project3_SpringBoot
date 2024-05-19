@@ -92,7 +92,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
                                 <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
                             </ul>
-
+                            <span class="me-2" th:text="${member.tenTV}"></span>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                             <th scope="col">Thời gian đặt chỗ</th>
                                         </tr>
                                     </thead>
-                                     <tbody>
+                                    <tbody>
                                         <tr th:each="thongTin : ${thongTinList}">
                                             <td th:text="${thongTin.thietBi.maTB}"></td>
                                             <td th:text="${thongTin.thietBi.tenTB}"></td>

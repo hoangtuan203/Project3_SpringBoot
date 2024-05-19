@@ -145,6 +145,7 @@
                                 <li><a class="dropdown-item"  th:href="@{'/thietbidangmuon?maTV=' + ${member.maTV}}">Thiết bị đang mượn</a></li>
                                 <li><a class="dropdown-item" th:href="@{/login}">Đăng xuất</a></li>
                             </ul>
+                             <span class="me-2" th:text="${member.tenTV}"></span>
                         </div>
                     </div>
                 </div>
