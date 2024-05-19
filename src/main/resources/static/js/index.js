@@ -36,6 +36,10 @@ $(document).ready(function() {
 
 
     $('#btnDatCho').click(function() {
+        if ($('.table-row input[type="checkbox"]:checked').length === 0) {
+            alert('Vui lòng chọn thiết bị muốn đặt chỗ!');
+            return;
+        }
         // Tạo một mảng để lưu trữ các thuộc tính được chọn
         var selectedItems = [];
 
