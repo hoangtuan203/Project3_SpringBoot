@@ -44,7 +44,7 @@ public class ThongtinSD implements Serializable {
     }
 
     public ThongtinSD(int maTT, Member thanhVien, ThietBi thietBi, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
-                      Timestamp tgDatCho) {
+            Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.thietBi = thietBi;
@@ -55,7 +55,7 @@ public class ThongtinSD implements Serializable {
     }
 
     public ThongtinSD(int maTT, Member thanhVien, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra,
-                      Timestamp tgDatCho) {
+            Timestamp tgDatCho) {
         this.maTT = maTT;
         this.thanhVien = thanhVien;
         this.tgVao = tgVao;
